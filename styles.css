@@ -33,6 +33,15 @@
     font-display: swap;
 }
 
+/* Caslon 540 Regular (local) for ampersands */
+@font-face {
+    font-family: 'Caslon 540';
+    src: local('Caslon 540 Regular'), url('fonts/Caslon 540 Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Alegreya local family (essential weights + italic) */
 @font-face {
     font-family: 'Alegreya';
@@ -119,13 +128,22 @@ body::after {
 /* Hero Section */
 .hero {
     height: 100vh;
-    background: url('img/PXL_20250426_222859845.MP.jpg') center/cover no-repeat;
+    background-image: url('img/principal.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 42%; /* center the subjects a bit higher */
     display: flex;
     align-items: flex-start;
     justify-content: center;
     position: relative;
     text-align: center;
     padding-top: 2vh;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        background-position: 45% 38%;
+    }
 }
 
 .hero::before {
@@ -155,8 +173,8 @@ body::after {
     font-family: 'Amsterdam Four', 'Alegreya', serif;
     font-size: 4rem;
     font-weight: 700;
-    color: #ffffff;
     margin: 20px 0;
+    color: #ffffff; /* hero default */
     text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
 }
 
@@ -177,13 +195,44 @@ body::after {
     animation-fill-mode: forwards;
 }
 
+/* Only HERO title: larger and thinner look */
+.hero .couple-names {
+    font-size: 4.2rem;      /* un poco más pequeño */
+    font-weight: 400;       /* más delgadito (no bold) */
+    line-height: 1.1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.35); /* sombra más sutil */
+}
+
 .ampersand {
+    font-family: 'Caslon 540', 'Amsterdam Four', 'Alegreya', serif;
     font-size: 3rem;
     color: var(--accent-blue);
     margin: 0 20px;
     display: inline-block;
     animation: pulse 2s infinite;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Hero title spacing remains default; color handled above */
+
+/* Footer ampersand: Caslon, no pulse, inherit color */
+.couple-initials .ampersand {
+    font-family: 'Caslon 540', 'Amsterdam Four', 'Alegreya', serif;
+    animation: none;
+    color: inherit;
+    text-shadow: none;
+    margin: 0 8px;
+    font-size: 1em;
+}
+
+/* Footer-specific override for current markup */
+.footer .couple-names .ampersand {
+    font-family: 'Caslon 540', 'Amsterdam Four', 'Alegreya', serif;
+    animation: none;
+    color: inherit;
+    text-shadow: none;
+    margin: 0 8px;
+    font-size: 1em;
 }
 
 .wedding-date {
@@ -233,6 +282,7 @@ body::after {
     text-align: center;
     color: #0C4A6E; /* secondary heading */
     margin-bottom: 50px;
+    font-weight: 400; /* align with timeline-title */
     position: relative;
     z-index: 2;
 }
@@ -243,16 +293,17 @@ body::after {
     bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue-light));
+    width: 120px;
+    height: 1px;
+    background: var(--accent-gold); /* match timeline underline */
 }
 
 .details-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    margin-top: 60px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    column-gap: 16px;
+    row-gap: 8px; /* less space above items */
+    padding: 8px 12px 22px; /* more bottom padding to separate the button from the card edge */
 }
 
 .detail-card {
@@ -260,7 +311,7 @@ body::after {
     background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
     background-blend-mode: multiply, multiply, normal, normal, multiply;
     background-size: 160px 160px, 120px 120px, 240px 240px, 200px 200px, 300px 300px;
-    padding: 40px;
+    padding: 2px 12px 12px;
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 4px 18px rgba(0,0,0,0.06);
@@ -268,63 +319,21 @@ body::after {
     border: 1px solid rgba(0,0,0,0.06);
     position: relative;
     z-index: 2;
+    /* more space below each card without affecting top */
+    margin-bottom: 14px;
 }
 
-.detail-card:hover {
+.detail-card:hover,
+.detail-card.in-view {
     transform: translateY(-5px);
     box-shadow: 0 8px 30px rgba(0,0,0,0.12);
 }
 
-/* Simpler style for the Ceremony card to align with the invitation */
-.detail-card.ceremony {
-    background: transparent;
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
-    padding: 20px 0 30px;
-}
-
-.detail-card.ceremony:hover {
-    transform: none;
-    box-shadow: none;
-}
-
-.detail-card.ceremony .card-icon {
-    opacity: 1;
-}
-
-.detail-card.ceremony:hover .card-icon {
-    color: var(--accent-blue);
-    transform: none;
-}
-
-/* Same simplified style for the Reception card */
-.detail-card.reception {
-    background: transparent;
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
-    padding: 20px 0 30px;
-}
-
-.detail-card.reception:hover {
-    transform: none;
-    box-shadow: none;
-}
-
-.detail-card.reception .card-icon {
-    opacity: 1;
-}
-
-.detail-card.reception:hover .card-icon {
-    color: var(--accent-blue);
-    transform: none;
-}
 
 .card-icon {
     font-size: 2.5rem;
     color: var(--accent-blue);
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     opacity: 0.8;
     transition: all 0.3s ease;
     display: inline-flex;
@@ -348,15 +357,16 @@ body::after {
 
 /* PNG icon sizing for ceremony/reception */
 .card-icon img {
-    width: 250px;
-    height: 250px;
+    width: 350px;
+    height: 350px;
     object-fit: contain;
     display: block;
     margin: 0 auto;
     filter: drop-shadow(0 1px 0 rgba(0,0,0,0.03));
 }
 
-.detail-card:hover .card-icon {
+.detail-card:hover .card-icon,
+.detail-card.in-view .card-icon {
     opacity: 1;
     transform: translateY(-2px);
     color: var(--accent-gold);
@@ -368,7 +378,7 @@ body::after {
     letter-spacing: 0.2px;
     font-size: 1.7rem;
     color: var(--text-main);
-    margin-bottom: 15px;
+    margin-bottom: 6px;
 }
 
 .time {
@@ -377,7 +387,7 @@ body::after {
     color: var(--accent-blue); /* primary for time */
     font-weight: 700;
     letter-spacing: 0.3px;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
 }
 
 .location {
@@ -386,7 +396,7 @@ body::after {
     color: #0C4A6E; /* secondary */
     font-weight: 500;
     letter-spacing: 0.2px;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 
 .address {
@@ -394,7 +404,7 @@ body::after {
     color: #94a3b8;
     font-size: 0.95rem;
     font-style: italic;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 }
 
 .map-btn {
@@ -407,6 +417,11 @@ body::after {
     font-size: 1rem;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Extra space below the button inside cards */
+.detail-card .map-btn {
+    margin-bottom: 16px;
 }
 
 .map-btn:hover {
@@ -429,7 +444,7 @@ body::after {
 }
 
 .countdown-section .section-title {
-    color: var(--text-main);
+    color: #0C4A6E; /* match timeline title color */
     position: relative;
     z-index: 2;
 }
@@ -624,16 +639,9 @@ body::after {
     font-style: italic;
 }
 
-/* Add decorative hearts between events */
+/* Decorative separators removed per request */
 .timeline-event:not(:last-child)::after {
-    content: '♥';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 80px;
-    color: var(--accent-gold); /* warm gold accent */
-    font-size: 0.8rem;
-    opacity: 0.6;
+    content: none;
 }
 
 /* Responsive Design */
@@ -643,6 +651,8 @@ body::after {
         height: 60px;
         font-size: 1.5rem;
     }
+    /* Reduce only the HERO title on tablets */
+    .hero .couple-names { font-size: 3rem; line-height: 1.15; }
     
     .timeline-title {
         font-size: 2rem;
@@ -857,13 +867,15 @@ body::after {
 
 /* Simple Gallery */
 .simple-gallery {
-    padding: 100px 0 40px;
-    background: var(--paper-bg);
+    padding: 60px 0 40px;
+    /* Use the lighter paper tone like the countdown (Faltan) section for clear separation */
+    background: var(--paper-bg-2);
     background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
     background-blend-mode: multiply, multiply, normal, normal, multiply;
     background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
     background-attachment: fixed, fixed, fixed, fixed, fixed;
 }
+
 
 /* Info Section now uses paper texture */
 .info-section {
@@ -884,7 +896,7 @@ body::after {
 
 .gallery-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 28px;
 }
 
 .gallery-icon {
@@ -902,18 +914,19 @@ body::after {
 
 .gallery-title {
     font-family: 'Amsterdam Four', 'Alegreya', serif;
-    font-size: 2.2rem;
+    font-size: 2.5rem; /* match timeline size */
     color: #0C4A6E; /* secondary */
     position: relative;
     display: inline-block;
     padding: 10px 20px;
+    font-weight: 400; /* align with timeline-title */
 }
 
 .gallery-title::after {
     content: '';
     display: block;
     height: 1px;
-    width: 200px;
+    width: 120px; /* match timeline underline width */
     background: var(--accent-gold); /* accent */
     margin: 10px auto 0;
 }
@@ -947,6 +960,7 @@ body::after {
     filter: grayscale(10%) saturate(75%) brightness(0.9) contrast(0.98);
 }
 
+.gallery-item.in-view img,
 .gallery-item:hover img {
     transform: scale(1.04);
     filter: none; /* color original */
@@ -1246,6 +1260,11 @@ body::after {
     z-index: 2;
 }
 
+.footer .couple-names {
+    color: #fff; /* footer names in white */
+    margin-bottom: 36px; /* más espacio con el texto siguiente */
+}
+
 .couple-initials {
     font-family: 'Amsterdam Four', 'Alegreya', serif;
     font-size: 4rem;
@@ -1275,6 +1294,16 @@ body::after {
 
 .social-link:hover {
     color: #64748B;
+}
+
+/* “Con amor, Rosa y Honorato” formatting */
+.with-love { margin-top: 0; }
+
+/* Footer &: keep white, no animation */
+.footer .couple-names .ampersand {
+    color: var(--accent-gold);
+    animation: none;
+    text-shadow: none;
 }
 
 /* Modal */
@@ -1461,6 +1490,8 @@ body::after {
     .hero-content {
         padding: 0 20px;
     }
+    /* Reduce only the HERO title on phones */
+    .hero .couple-names { font-size: 2.2rem; line-height: 1.15; }
     
     .couple-names {
         font-size: 2rem;

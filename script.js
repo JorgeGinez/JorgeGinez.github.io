@@ -257,6 +257,24 @@ document.addEventListener('DOMContentLoaded', function() {
         lightbox.addEventListener('touchstart', onTouchStart, { passive: true });
         lightbox.addEventListener('touchend', onTouchEnd, { passive: true });
     }
+
+    // Mobile-friendly hover effect: highlight gallery items when they enter the viewport
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const detailCards = document.querySelectorAll('.detail-card');
+    if (galleryItems.length || detailCards.length) {
+        const highlightObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                } else {
+                    entry.target.classList.remove('in-view');
+                }
+            });
+        }, { threshold: 0.35 });
+
+        galleryItems.forEach((item) => highlightObserver.observe(item));
+        detailCards.forEach((card) => highlightObserver.observe(card));
+    }
 });
 
 // Add floating hearts animation
