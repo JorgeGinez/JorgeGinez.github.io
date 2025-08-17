@@ -5,12 +5,98 @@
     box-sizing: border-box;
 }
 
+:root {
+    /* Paper tones (backgrounds) */
+    --paper-bg: #f8f7f3;
+    --paper-bg-2: #faf2e5;
+    /* Accents */
+    --accent-blue: #b6d5e6;
+    --accent-blue-light: #dbebf3;
+    --accent-gold: #c29534;
+    /* Text */
+    --text-main: #0F172A;
+    /* Paper noise texture (SVG) */
+    --paper-noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 100 100'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0.035'/></feComponentTransfer></filter><rect width='100' height='100' filter='url(%23n)'/></svg>");
+}
+
+/* Custom font: Amsterdam Four (local). */
+@font-face {
+    font-family: 'Amsterdam Four';
+    src: local('Amsterdam Four'),
+         url('fonts/AmsterdamFour.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Alegreya local family (essential weights + italic) */
+@font-face {
+    font-family: 'Alegreya';
+    src: local('Alegreya Regular'), url('fonts/Alegreya-Regular.ttf') format('truetype');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Alegreya';
+    src: local('Alegreya Italic'), url('fonts/Alegreya-Italic.ttf') format('truetype');
+    font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+    font-family: 'Alegreya';
+    src: local('Alegreya Medium'), url('fonts/Alegreya-Medium.ttf') format('truetype');
+    font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Alegreya';
+    src: local('Alegreya SemiBold'), url('fonts/Alegreya-SemiBold.ttf') format('truetype');
+    font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Alegreya';
+    src: local('Alegreya Bold'), url('fonts/Alegreya-Bold.ttf') format('truetype');
+    font-weight: 700; font-style: normal; font-display: swap;
+}
+
+/* Karla local family (UI weights) */
+@font-face {
+    font-family: 'Karla';
+    src: local('Karla Bold'), url('fonts/Karla-Bold.ttf') format('truetype');
+    font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'Karla';
+    src: local('Karla ExtraBold'), url('fonts/Karla-ExtraBold.ttf') format('truetype');
+    font-weight: 800; font-style: normal; font-display: swap;
+}
+
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Alegreya', serif;
     line-height: 1.6;
-    color: #0F172A; /* neutral dark for body text, complements PMS 2975 */
+    color: var(--text-main); /* neutral dark */
     overflow-x: hidden;
-    background: #f8f9fa;
+    /* Fabriano-like paper background using layered subtle textures */
+    background-color: var(--paper-bg);
+    background-image:
+        radial-gradient(100% 100% at 50% 0%, rgba(0,0,0,0.02), rgba(255,255,255,0) 40%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0 2px, rgba(255,255,255,0.015) 2px 4px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.01) 0 1px, rgba(255,255,255,0.01) 1px 3px);
+    background-attachment: fixed;
+    position: relative;
+}
+
+/* Overlay texture so it is visible over section backgrounds */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1; /* below modals but above regular content backgrounds */
+    background-image:
+        var(--paper-noise),
+        radial-gradient(200px 200px at 20% 15%, rgba(0,0,0,0.03), rgba(0,0,0,0) 70%),
+        radial-gradient(220px 220px at 80% 85%, rgba(0,0,0,0.02), rgba(0,0,0,0) 65%);
+    background-repeat: repeat, no-repeat, no-repeat;
+    background-size: 160px 160px, 100% 100%, 100% 100%;
+    opacity: 0.28; /* adjust intensity of the paper texture */
 }
 
 .container {
@@ -55,7 +141,7 @@ body {
 }
 
 .couple-names {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Amsterdam Four', 'Alegreya', serif;
     font-size: 4rem;
     font-weight: 700;
     color: #ffffff;
@@ -82,7 +168,7 @@ body {
 
 .ampersand {
     font-size: 3rem;
-    color: #00B7EB;
+    color: var(--accent-blue);
     margin: 0 20px;
     display: inline-block;
     animation: pulse 2s infinite;
@@ -90,7 +176,7 @@ body {
 }
 
 .wedding-date {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Alegreya', serif;
     font-size: 1.8rem;
     color: #ffffff;
     margin: 20px 0;
@@ -103,6 +189,7 @@ body {
     color: #ffffff;
     margin: 30px 0;
     font-style: italic;
+    font-family: 'Alegreya', serif;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }
 
@@ -121,12 +208,12 @@ body {
 /* Wedding Details Section */
 .wedding-details {
     padding: 80px 0;
-    background: #ffffff;
+    background: var(--paper-bg);
     position: relative;
 }
 
 .section-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Amsterdam Four', 'Alegreya', serif;
     font-size: 2.5rem;
     text-align: center;
     color: #0C4A6E; /* secondary heading */
@@ -143,7 +230,7 @@ body {
     transform: translateX(-50%);
     width: 80px;
     height: 2px;
-    background: linear-gradient(90deg, #00B7EB, #7DD3FC);
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue-light));
 }
 
 .details-grid {
@@ -154,13 +241,13 @@ body {
 }
 
 .detail-card {
-    background: #ffffff;
+    background: var(--paper-bg-2);
     padding: 40px;
     border-radius: 8px;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.06);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #ecf0f1;
+    border: 1px solid rgba(0,0,0,0.06);
     position: relative;
     z-index: 2;
 }
@@ -172,7 +259,7 @@ body {
 
 .card-icon {
     font-size: 2.5rem;
-    color: #00B7EB;
+    color: var(--accent-blue);
     margin-bottom: 20px;
     opacity: 0.8;
     transition: all 0.3s ease;
@@ -195,37 +282,46 @@ body {
 .detail-card:hover .card-icon {
     opacity: 1;
     transform: translateY(-2px);
-    color: #0284C7;
+    color: var(--accent-gold);
 }
 
 .detail-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    color: #0284C7;
+    font-family: 'Karla', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    font-size: 1.7rem;
+    color: var(--text-main);
     margin-bottom: 15px;
 }
 
 .time {
-    font-size: 1.3rem;
-    color: #00B7EB; /* primary for time */
-    font-weight: bold;
+    font-family: 'Karla', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 1.1rem;
+    color: var(--accent-blue); /* primary for time */
+    font-weight: 700;
+    letter-spacing: 0.3px;
     margin-bottom: 10px;
 }
 
 .location {
-    font-size: 1.2rem;
+    font-family: 'Alegreya', serif;
+    font-size: 1.15rem;
     color: #0C4A6E; /* secondary */
-    font-weight: 600;
+    font-weight: 500;
+    letter-spacing: 0.2px;
     margin-bottom: 5px;
 }
 
 .address {
-    color: #E0E0E0;
+    font-family: 'Alegreya', serif;
+    color: #94a3b8;
+    font-size: 0.95rem;
+    font-style: italic;
     margin-bottom: 20px;
 }
 
 .map-btn {
-    background: #00B7EB; /* primary */
+    background: var(--accent-blue); /* primary */
     color: white;
     border: none;
     padding: 12px 24px;
@@ -233,26 +329,26 @@ body {
     cursor: pointer;
     font-size: 1rem;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0,183,235,0.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .map-btn:hover {
-    background: #0284C7; /* secondary hover */
+    background: var(--accent-gold); /* elegant hover */
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(2,132,199,0.3);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 /* Countdown Section */
 .countdown-section {
     padding: 80px 0;
-    background: #ecf0f1;
+    background: var(--paper-bg-2);
     color: #0C4A6E;
     text-align: center;
     position: relative;
 }
 
 .countdown-section .section-title {
-    color: #0284C7;
+    color: var(--text-main);
     position: relative;
     z-index: 2;
 }
@@ -276,12 +372,12 @@ body {
     display: block;
     font-size: 3rem;
     font-weight: bold;
-    background: #ffffff;
+    background: var(--paper-bg);
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    border: 1px solid #ecf0f1;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.06);
 }
 
 .countdown-label {
@@ -293,7 +389,7 @@ body {
 /* Timeline Section */
 .timeline-section {
     padding: 80px 0;
-    background: #ffffff;
+    background: var(--paper-bg);
     position: relative;
 }
 
@@ -305,7 +401,7 @@ body {
 .timeline-clock {
     width: 80px;
     height: 80px;
-        background: #00B7EB; /* PMS 2975 primary */
+    background: var(--accent-blue);
     color: white;
     border-radius: 50%;
     display: inline-flex;
@@ -324,11 +420,11 @@ body {
     transform: translateX(-50%);
     width: 2px;
     height: 30px;
-        background: #00B7EB; /* primary */
+    background: var(--accent-blue);
 }
 
 .timeline-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Amsterdam Four', 'Alegreya', serif;
     font-size: 2.5rem;
         color: #0C4A6E; /* secondary deep blue for titles */
     margin: 0;
@@ -344,7 +440,7 @@ body {
     transform: translateX(-50%);
     width: 120px;
         height: 1px;
-    background: #D4AF37; /* warm gold accent pairs well with PMS 2975 */
+    background: var(--accent-gold);
 }
 
 .timeline-events {
@@ -374,7 +470,7 @@ body {
     width: 56px;
     height: 56px;
     background: transparent; /* minimalist */
-    color: #0C4A6E; /* deep blue line color */
+    color: var(--text-main);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -392,7 +488,7 @@ body {
     stroke-linejoin: round;
 }
 
-.event-icon:hover { transform: scale(1.05); color: #00B7EB; }
+.event-icon:hover { transform: scale(1.05); color: var(--accent-gold); }
 
 .event-content {
     flex: 1;
@@ -400,19 +496,21 @@ body {
 }
 
 .event-content h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-        color: #0C4A6E; /* secondary for headings */
+    font-family: 'Karla', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 1.2rem;
+    color: #0C4A6E; /* secondary for headings */
     margin: 0 0 8px 0;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
 }
 
 .event-time {
-    font-size: 1.1rem;
-        color: #00B7EB; /* primary for times */
+    font-family: 'Karla', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 1.05rem;
+    color: var(--accent-blue); /* primary for times */
     margin: 0 0 8px 0;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.3px;
 }
 
 .event-description {
@@ -430,7 +528,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     margin-top: 80px;
-    color: #D4AF37; /* warm gold accent */
+    color: var(--accent-gold); /* warm gold accent */
     font-size: 0.8rem;
     opacity: 0.6;
 }
@@ -657,7 +755,7 @@ body {
 /* Simple Gallery */
 .simple-gallery {
     padding: 100px 0 40px;
-    background: #ffffff;
+    background: var(--paper-bg);
 }
 
 .gallery-header {
@@ -669,7 +767,7 @@ body {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: #00B7EB; /* primary */
+    background: var(--accent-blue); /* primary */
     color: #fff;
     display: inline-flex;
     align-items: center;
@@ -679,7 +777,7 @@ body {
 }
 
 .gallery-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Amsterdam Four', 'Alegreya', serif;
     font-size: 2.2rem;
     color: #0C4A6E; /* secondary */
     position: relative;
@@ -692,7 +790,7 @@ body {
     display: block;
     height: 1px;
     width: 200px;
-    background: #D4AF37; /* accent */
+    background: var(--accent-gold); /* accent */
     margin: 10px auto 0;
 }
 
@@ -827,7 +925,7 @@ body {
     position: absolute;
     top: 20px;
     right: 20px;
-    background: #00B7EB;
+    background: var(--accent-blue);
     color: #fff;
     border: none;
     border-radius: 50%;
@@ -843,7 +941,7 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0,183,235,0.8);
+    background: rgba(182,213,230,0.9);
     color: #fff;
     border: none;
     border-radius: 50%;
@@ -975,18 +1073,16 @@ body {
 }
 
 .info-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
+    font-family: 'Karla', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.3px;
     color: #0284C7;
     margin-bottom: 10px;
 }
 
-.info-card p {
-    color: #0C4A6E;
-    margin-bottom: 10px;
-}
-
 .info-detail {
+    font-family: 'Alegreya', serif;
     font-size: 0.9rem;
     color: #E0E0E0;
 }
@@ -1012,7 +1108,7 @@ body {
 
 /* Footer */
 .footer {
-    background: #00B7EB; /* primary */
+    background: var(--accent-blue); /* primary */
     color: white;
     padding: 60px 0 40px;
     text-align: center;
@@ -1027,7 +1123,7 @@ body {
 }
 
 .couple-initials {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Amsterdam Four', 'Alegreya', serif;
     font-size: 4rem;
     color: #64748B;
     margin-bottom: 20px;
@@ -1035,7 +1131,7 @@ body {
 }
 
 .footer-date {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Alegreya', serif;
     font-size: 1.2rem;
     margin: 20px 0;
     color: #ecf0f1;
@@ -1083,19 +1179,36 @@ body {
 
 .modal-icon {
     font-size: 4rem;
-    color: #27ae60;
+    color: var(--accent-gold);
     margin-bottom: 20px;
 }
 
 .modal-content h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Alegreya', serif;
     font-size: 1.8rem;
     color: #0C4A6E; /* secondary title */
     margin-bottom: 15px;
 }
 
+/* Buttons, labels and small UI using Karla bold for clarity */
+.map-btn,
+.submit-btn,
+.gift-btn,
+.lightbox-close,
+.lightbox-nav,
+.countdown-label,
+.form-group label {
+    font-family: 'Karla', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-weight: 700;
+}
+
+.countdown-number {
+    font-family: 'Karla', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-weight: 800;
+}
+
 .modal-btn {
-    background: #00B7EB; /* primary */
+    background: var(--accent-blue); /* primary */
     color: white;
     border: none;
     padding: 12px 30px;
@@ -1104,13 +1217,13 @@ body {
     font-size: 1rem;
     margin-top: 20px;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0,183,235,0.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .modal-btn:hover {
-    background: #0284C7; /* secondary hover */
+    background: var(--accent-gold); /* secondary hover */
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(2,132,199,0.3);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 /* Animations */

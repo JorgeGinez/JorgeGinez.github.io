@@ -20,7 +20,7 @@ function updateCountdown() {
         document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
     } else {
         // Wedding day has arrived!
-        document.getElementById('countdown').innerHTML = '<h2 style="color: white; font-family: \'Dancing Script\', cursive; font-size: 3rem;">¡Es nuestro día especial!</h2>';
+    document.getElementById('countdown').innerHTML = '<h2 style="color: white; font-family: \'Amsterdam Four\', \'Alegreya\', serif; font-size: 3rem;">¡Es nuestro día especial!</h2>';
     }
 }
 
@@ -426,7 +426,7 @@ window.addEventListener('load', function() {
         ">
             <div style="text-align: center;">
                 <div style="
-                    font-family: 'Dancing Script', cursive;
+                    font-family: 'Amsterdam Four', 'Alegreya', serif;
                     font-size: 3rem;
                     color: #0C4A6E;
                     margin-bottom: 20px;
