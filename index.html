@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación de Boda - Rosa & Honorato</title>
+    <link rel="stylesheet" href="styles.css?v=2025-08-10-1">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@300;400;700&family=Lato:wght@300;400&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="couple-names">
+                <span class="bride-name">Rosa</span>
+                <span class="ampersand">&</span>
+                <span class="groom-name">Honorato</span>
+            </h1>
+            <p class="wedding-date">20 de Diciembre, 2025</p>
+            <p class="invitation-text">Nos complace invitarte a celebrar nuestra boda</p>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Wedding Details Section -->
+    <section class="wedding-details">
+        <div class="container">
+            <h2 class="section-title">Detalles de la Celebración</h2>
+            
+            <div class="details-grid">
+                <!-- Ceremony -->
+                <div class="detail-card ceremony">
+                    <div class="card-icon">
+                        <!-- Minimal bell icon (different from timeline) -->
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M6 16h12"/>
+                            <path d="M18 16V11a6 6 0 1 0-12 0v5"/>
+                            <path d="M12 3v2"/>
+                            <path d="M10 20a2 2 0 0 0 4 0"/>
+                        </svg>
+                    </div>
+                    <h3>Ceremonia</h3>
+                    <p class="time">2:00 PM</p>
+                    <p class="location">Parroquia La Inmaculada Concepción</p>
+                    <p class="address">Yahualutzingo, Puebla</p>
+                    <button class="map-btn" onclick="openMap('ceremony')">
+                        <i class="fas fa-map-marker-alt"></i> Ver en Mapa
+                    </button>
+                </div>
+
+                <!-- Reception -->
+                <div class="detail-card reception">
+                    <div class="card-icon">
+                        <!-- Minimal coupe glass icon (different from timeline) -->
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M4 7h16"/>
+                            <path d="M7 7a5 5 0 0 0 10 0"/>
+                            <path d="M12 12v7"/>
+                            <path d="M8 21h8"/>
+                        </svg>
+                    </div>
+                    <h3>Recepción</h3>
+                    <p class="time">5:00 PM</p>
+                    <p class="location">Casa Sara y Honorato</p>
+                    <p class="address">Yahualutzingo, Puebla</p>
+                    <button class="map-btn" onclick="openMap('reception')">
+                        <i class="fas fa-map-marker-alt"></i> Ver en Mapa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section class="countdown-section">
+        <div class="container">
+            <h2 class="section-title">Faltan</h2>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Días</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Horas</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minutos</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="timeline-header">
+                <div class="timeline-clock" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M12 7v6l4 2"></path>
+                    </svg>
+                </div>
+                <h2 class="timeline-title">Minuto a minuto</h2>
+            </div>
+            
+            <div class="timeline-events">
+                <div class="timeline-event">
+                    <div class="event-icon" aria-hidden="true">
+                        <!-- Minimal church icon -->
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3v4"/>
+                            <path d="M10 5h4"/>
+                            <path d="M4 12l8-5 8 5"/>
+                            <path d="M6 12v8h12v-8"/>
+                            <path d="M10 20v-5a2 2 0 0 1 4 0v5"/>
+                        </svg>
+                    </div>
+                    <div class="event-content">
+                        <h3>CEREMONIA RELIGIOSA</h3>
+                        <p class="event-time">4:00 - 5:00 pm</p>
+                        <p class="event-description">Unidos ante Dios en este momento sagrado.</p>
+                    </div>
+                </div>
+                
+        <div class="timeline-event">
+                    <div class="event-icon" aria-hidden="true">
+                        <!-- Minimal rings icon -->
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9" cy="12" r="5"/>
+                            <circle cx="15" cy="12" r="5"/>
+                        </svg>
+                    </div>
+                    <div class="event-content">
+                        <h3>RECEPCIÓN</h3>
+                        <p class="event-time">5:30 - 7:00 pm</p>
+                        <p class="event-description">Brindemos juntos por este nuevo comienzo.</p>
+                    </div>
+                </div>
+                
+        <div class="timeline-event">
+                    <div class="event-icon" aria-hidden="true">
+                        <!-- Minimal cloche icon -->
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 8a4 4 0 0 1 4 4H8a4 4 0 0 1 4-4z"/>
+                            <path d="M3 16h18"/>
+                            <path d="M12 6v2"/>
+                        </svg>
+                    </div>
+                    <div class="event-content">
+            <h3>COMIDA</h3>
+                        <p class="event-time">7:00 - 9:00 pm</p>
+                        <p class="event-description">Disfrutemos de una deliciosa cena juntos.</p>
+                    </div>
+                </div>
+                
+        <div class="timeline-event">
+                    <div class="event-icon" aria-hidden="true">
+                        <!-- Minimal sparkler icon -->
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 14l-6 6"/>
+                            <path d="M12 14l6 6"/>
+                            <path d="M12 14V8"/>
+                            <path d="M12 8l2-2"/>
+                            <path d="M12 8l-2-2"/>
+                            <path d="M12 8l0-3"/>
+                            <path d="M12 8l3 0"/>
+                            <path d="M12 8l-3 0"/>
+                        </svg>
+                    </div>
+                    <div class="event-content">
+            <h3>BAILE</h3>
+                        <p class="event-time">9:00 pm - 2:00 am</p>
+                        <p class="event-description">¡Celebremos hasta el amanecer!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simple Gallery Section -->
+    <section class="simple-gallery">
+        <div class="container">
+            <div class="gallery-header">
+                <div class="gallery-icon"><i class="far fa-image"></i></div>
+                <h2 class="gallery-title">Galería</h2>
+            </div>
+
+            <div class="gallery-grid structured">
+                <div class="gallery-item left"><img loading="lazy" decoding="async" src="img/IMG_20190430_191318994.jpg"></div>
+                <div class="gallery-item top"><img loading="lazy" decoding="async" src="img/PXL_20250426_222936809.MP.jpg"></div>
+                <div class="gallery-item right"><img loading="lazy" decoding="async" src="img/PXL_20250426_223036710.jpg"></div>
+                <div class="gallery-item bottom"><img loading="lazy" decoding="async" src="img/PXL_20250426_223609238.MP.jpg"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox for Gallery -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+        <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+        <figure class="lightbox-figure">
+            <img id="lightboxImage" alt="Foto de la galería" />
+            <figcaption id="lightboxCaption"></figcaption>
+        </figure>
+        <button class="lightbox-nav next" id="lightboxNext" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="couple-initials">R & H</div>
+                <p>Con amor, Rosa y Honorato</p>
+                <p class="footer-date">21 de Diciembre, 2025</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>¡Confirmación Recibida!</h3>
+            <p>Gracias por confirmar tu asistencia. ¡Esperamos verte en nuestra boda!</p>
+            <button class="modal-btn" onclick="closeModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="script.js?v=2025-08-10-1"></script>
+</body>
+</html>
