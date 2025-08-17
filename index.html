@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invitación de Boda - Rosa & Honorato</title>
-    <link rel="stylesheet" href="styles.css?v=2025-08-16-2">
+    <link rel="stylesheet" href="styles.css?v=2025-08-17-5">
     <!-- Preload local fonts for better performance -->
     <link rel="preload" href="fonts/AmsterdamFour.woff" as="font" type="font/woff" crossorigin>
     <link rel="preload" href="fonts/Alegreya-Regular.ttf" as="font" type="font/ttf" crossorigin>
@@ -16,9 +16,9 @@
     <section class="hero">
         <div class="hero-content">
             <h1 class="couple-names">
-                <span class="bride-name">Rosa</span>
-                <span class="ampersand">&</span>
                 <span class="groom-name">Honorato</span>
+                <span class="ampersand">&</span>
+                <span class="bride-name">Rosa</span>
             </h1>
             <p class="wedding-date">20 de Diciembre, 2025</p>
             <p class="invitation-text">Nos complace invitarte a celebrar nuestra boda</p>
@@ -37,18 +37,12 @@
                 <!-- Ceremony -->
                 <div class="detail-card ceremony">
                     <div class="card-icon">
-                        <!-- Minimal bell icon (different from timeline) -->
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M6 16h12"/>
-                            <path d="M18 16V11a6 6 0 1 0-12 0v5"/>
-                            <path d="M12 3v2"/>
-                            <path d="M10 20a2 2 0 0 0 4 0"/>
-                        </svg>
+                        <img src="img/iglesia.png" alt="Iglesia" loading="lazy" decoding="async" />
                     </div>
                     <h3>Ceremonia</h3>
                     <p class="time">2:00 PM</p>
                     <p class="location">Parroquia La Inmaculada Concepción</p>
-                    <p class="address">Yahualutzingo, Puebla</p>
+                    <p class="address">Yahualutzingo, Vicente Guerrero, Puebla</p>
                     <button class="map-btn" onclick="openMap('ceremony')">
                         <i class="fas fa-map-marker-alt"></i> Ver en Mapa
                     </button>
@@ -57,18 +51,12 @@
                 <!-- Reception -->
                 <div class="detail-card reception">
                     <div class="card-icon">
-                        <!-- Minimal coupe glass icon (different from timeline) -->
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M4 7h16"/>
-                            <path d="M7 7a5 5 0 0 0 10 0"/>
-                            <path d="M12 12v7"/>
-                            <path d="M8 21h8"/>
-                        </svg>
+                        <img src="img/casa.png" alt="Casa para recepción" loading="lazy" decoding="async" />
                     </div>
                     <h3>Recepción</h3>
                     <p class="time">5:00 PM</p>
                     <p class="location">Casa Sara y Honorato</p>
-                    <p class="address">Yahualutzingo, Puebla</p>
+                    <p class="address">Yahualutzingo, Vicente Guerrero, Puebla</p>
                     <button class="map-btn" onclick="openMap('reception')">
                         <i class="fas fa-map-marker-alt"></i> Ver en Mapa
                     </button>
@@ -81,6 +69,7 @@
     <section class="countdown-section">
         <div class="container">
             <h2 class="section-title">Faltan</h2>
+            <p class="event-date">20 de Diciembre, 2025</p>
             <div class="countdown" id="countdown">
                 <div class="countdown-item">
                     <span class="countdown-number" id="days">00</span>
@@ -94,6 +83,11 @@
                     <span class="countdown-number" id="minutes">00</span>
                     <span class="countdown-label">Minutos</span>
                 </div>
+            </div>
+            <div class="countdown-actions">
+                <a class="map-btn calendar-btn" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda%20de%20Honorato%20y%20Rosa&dates=20251220/20251221&details=Ceremonia%3A%202%3A00%20PM%20-%20Parroquia%20La%20Inmaculada%20Concepci%C3%B3n.%0ARecepci%C3%B3n%3A%205%3A00%20PM%20-%20Casa%20Sara%20y%20Honorato.&location=Yahualutzingo%2C%20Vicente%20Guerrero%2C%20Puebla">
+                    <i class="fas fa-calendar-plus"></i> Agregar al Calendario
+                </a>
             </div>
         </div>
     </section>
@@ -125,7 +119,7 @@
                     </div>
                     <div class="event-content">
                         <h3>CEREMONIA RELIGIOSA</h3>
-                        <p class="event-time">4:00 - 5:00 pm</p>
+                        <p class="event-time">2:00 pm</p>
                         <p class="event-description">Unidos ante Dios en este momento sagrado.</p>
                     </div>
                 </div>
@@ -140,7 +134,7 @@
                     </div>
                     <div class="event-content">
                         <h3>RECEPCIÓN</h3>
-                        <p class="event-time">5:30 - 7:00 pm</p>
+                        <p class="event-time">4:00 pm</p>
                         <p class="event-description">Brindemos juntos por este nuevo comienzo.</p>
                     </div>
                 </div>
@@ -156,7 +150,7 @@
                     </div>
                     <div class="event-content">
             <h3>COMIDA</h3>
-                        <p class="event-time">7:00 - 9:00 pm</p>
+                        <p class="event-time">4:30 - 8:00 pm</p>
                         <p class="event-description">Disfrutemos de una deliciosa cena juntos.</p>
                     </div>
                 </div>
@@ -177,7 +171,7 @@
                     </div>
                     <div class="event-content">
             <h3>BAILE</h3>
-                        <p class="event-time">9:00 pm - 2:00 am</p>
+                        <p class="event-time">8:00 pm</p>
                         <p class="event-description">¡Celebremos hasta el amanecer!</p>
                     </div>
                 </div>
@@ -218,17 +212,9 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="couple-initials">R & H</div>
+                <div class="couple-initials">H & R</div>
                 <p>Con amor, Rosa y Honorato</p>
-                <p class="footer-date">21 de Diciembre, 2025</p>
-                <div class="social-links">
-                    <a href="#" class="social-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                </div>
+                <p class="footer-date">20 de Diciembre, 2025</p>
             </div>
         </div>
     </footer>
@@ -245,6 +231,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=2025-08-16-2"></script>
+    <script src="script.js?v=2025-08-17-1"></script>
 </body>
 </html>

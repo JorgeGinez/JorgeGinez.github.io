@@ -15,8 +15,12 @@
     --accent-gold: #c29534;
     /* Text */
     --text-main: #0F172A;
-    /* Paper noise texture (SVG) */
-    --paper-noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 100 100'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0.035'/></feComponentTransfer></filter><rect width='100' height='100' filter='url(%23n)'/></svg>");
+    /* Paper grain (soft noise) */
+    --paper-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 100 100'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='5' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0.15'/><feComponentTransfer><feFuncA type='table' tableValues='0 0.06'/></feComponentTransfer></filter><rect width='100' height='100' filter='url(%23g)'/></svg>");
+    /* Paper speckles (tiny dots) */
+    --paper-speckle: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280' viewBox='0 0 100 100'><filter id='s'><feTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='1' stitchTiles='stitch'/><feThreshold threshold='0.92'/><feComponentTransfer><feFuncA type='table' tableValues='0 0.07'/></feComponentTransfer></filter><rect width='100' height='100' filter='url(%23s)'/></svg>");
+    /* Paper fibers (elongated soft streaks) */
+    --paper-fibers: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 100 100'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' seed='7' stitchTiles='stitch'/><feGaussianBlur stdDeviation='0.5'/><feColorMatrix type='saturate' values='0.05'/><feComponentTransfer><feFuncA type='table' tableValues='0 0.025'/></feComponentTransfer></filter><rect width='100' height='100' filter='url(%23f)' transform='skewX(-12)' opacity='0.8'/></svg>");
 }
 
 /* Custom font: Amsterdam Four (local). */
@@ -73,12 +77,8 @@ body {
     line-height: 1.6;
     color: var(--text-main); /* neutral dark */
     overflow-x: hidden;
-    /* Fabriano-like paper background using layered subtle textures */
+    /* Paper background base */
     background-color: var(--paper-bg);
-    background-image:
-        radial-gradient(100% 100% at 50% 0%, rgba(0,0,0,0.02), rgba(255,255,255,0) 40%),
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0 2px, rgba(255,255,255,0.015) 2px 4px),
-        repeating-linear-gradient(90deg, rgba(0,0,0,0.01) 0 1px, rgba(255,255,255,0.01) 1px 3px);
     background-attachment: fixed;
     position: relative;
 }
@@ -89,14 +89,25 @@ body::before {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 1; /* below modals but above regular content backgrounds */
+    z-index: 0; /* behind content; sections/cards get their own textures too */
     background-image:
-        var(--paper-noise),
-        radial-gradient(200px 200px at 20% 15%, rgba(0,0,0,0.03), rgba(0,0,0,0) 70%),
-        radial-gradient(220px 220px at 80% 85%, rgba(0,0,0,0.02), rgba(0,0,0,0) 65%);
-    background-repeat: repeat, no-repeat, no-repeat;
-    background-size: 160px 160px, 100% 100%, 100% 100%;
-    opacity: 0.28; /* adjust intensity of the paper texture */
+        var(--paper-grain),
+        var(--paper-speckle),
+        var(--paper-fibers);
+    background-repeat: repeat, repeat, repeat;
+    background-size: 200px 200px, 280px 280px, 320px 320px;
+    opacity: 0.35;
+}
+
+/* Subtle vignette to emphasize paper edges */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 62%, rgba(0,0,0,0.06) 100%);
+    mix-blend-mode: multiply;
 }
 
 .container {
@@ -209,6 +220,10 @@ body::before {
 .wedding-details {
     padding: 80px 0;
     background: var(--paper-bg);
+    background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
+    background-blend-mode: multiply, multiply, normal, normal, multiply;
+    background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
+    background-attachment: fixed, fixed, fixed, fixed, fixed;
     position: relative;
 }
 
@@ -242,6 +257,9 @@ body::before {
 
 .detail-card {
     background: var(--paper-bg-2);
+    background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
+    background-blend-mode: multiply, multiply, normal, normal, multiply;
+    background-size: 160px 160px, 120px 120px, 240px 240px, 200px 200px, 300px 300px;
     padding: 40px;
     border-radius: 8px;
     text-align: center;
@@ -257,12 +275,61 @@ body::before {
     box-shadow: 0 8px 30px rgba(0,0,0,0.12);
 }
 
+/* Simpler style for the Ceremony card to align with the invitation */
+.detail-card.ceremony {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    padding: 20px 0 30px;
+}
+
+.detail-card.ceremony:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.detail-card.ceremony .card-icon {
+    opacity: 1;
+}
+
+.detail-card.ceremony:hover .card-icon {
+    color: var(--accent-blue);
+    transform: none;
+}
+
+/* Same simplified style for the Reception card */
+.detail-card.reception {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    padding: 20px 0 30px;
+}
+
+.detail-card.reception:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.detail-card.reception .card-icon {
+    opacity: 1;
+}
+
+.detail-card.reception:hover .card-icon {
+    color: var(--accent-blue);
+    transform: none;
+}
+
 .card-icon {
     font-size: 2.5rem;
     color: var(--accent-blue);
     margin-bottom: 20px;
     opacity: 0.8;
     transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-icon i {
@@ -277,6 +344,16 @@ body::before {
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
+}
+
+/* PNG icon sizing for ceremony/reception */
+.card-icon img {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 1px 0 rgba(0,0,0,0.03));
 }
 
 .detail-card:hover .card-icon {
@@ -342,6 +419,10 @@ body::before {
 .countdown-section {
     padding: 80px 0;
     background: var(--paper-bg-2);
+    background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
+    background-blend-mode: multiply, multiply, normal, normal, multiply;
+    background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
+    background-attachment: fixed, fixed, fixed, fixed, fixed;
     color: #0C4A6E;
     text-align: center;
     position: relative;
@@ -353,6 +434,14 @@ body::before {
     z-index: 2;
 }
 
+.countdown-section .event-date {
+    margin-top: 6px;
+    color: #0C4A6E;
+    font-family: 'Alegreya', serif;
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
 .countdown {
     display: flex;
     justify-content: center;
@@ -361,6 +450,16 @@ body::before {
     flex-wrap: wrap;
     position: relative;
     z-index: 2;
+}
+
+.countdown-actions {
+    margin-top: 24px;
+}
+
+.calendar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .countdown-item {
@@ -390,6 +489,10 @@ body::before {
 .timeline-section {
     padding: 80px 0;
     background: var(--paper-bg);
+    background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
+    background-blend-mode: multiply, multiply, normal, normal, multiply;
+    background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
+    background-attachment: fixed, fixed, fixed, fixed, fixed;
     position: relative;
 }
 
@@ -756,6 +859,27 @@ body::before {
 .simple-gallery {
     padding: 100px 0 40px;
     background: var(--paper-bg);
+    background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
+    background-blend-mode: multiply, multiply, normal, normal, multiply;
+    background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
+    background-attachment: fixed, fixed, fixed, fixed, fixed;
+}
+
+/* Info Section now uses paper texture */
+.info-section {
+    padding: 80px 0;
+    background: var(--paper-bg);
+    background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
+    background-blend-mode: multiply, multiply, normal, normal, multiply;
+    background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
+    background-attachment: fixed, fixed, fixed, fixed, fixed;
+}
+
+.info-card {
+    background: var(--paper-bg-2);
+    background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
+    background-blend-mode: multiply, multiply, normal, normal, multiply;
+    background-size: 160px 160px, 120px 120px, 240px 240px, 200px 200px, 300px 300px;
 }
 
 .gallery-header {
