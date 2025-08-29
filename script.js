@@ -1,7 +1,14 @@
 // Wedding Invitation JavaScript
 
-// Set the wedding date (change this to your actual wedding date)
-const weddingDate = new Date('2025-12-21T16:00:00').getTime();
+// Set the wedding date (start of ceremony)
+// Aligns with the invitation: Dec 20, 2025 at 2:00 PM (local time)
+const weddingDate = new Date('2025-12-20T14:00:00').getTime();
+
+// Cache countdown elements and guard missing nodes (e.g., no seconds in markup)
+const daysEl = document.getElementById('days');
+const hoursEl = document.getElementById('hours');
+const minutesEl = document.getElementById('minutes');
+const secondsEl = document.getElementById('seconds');
 
 // Countdown Timer
 function updateCountdown() {
@@ -14,10 +21,11 @@ function updateCountdown() {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        document.getElementById('days').textContent = days.toString().padStart(2, '0');
-        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    daysEl && (daysEl.textContent = days.toString().padStart(2, '0'));
+    hoursEl && (hoursEl.textContent = hours.toString().padStart(2, '0'));
+    minutesEl && (minutesEl.textContent = minutes.toString().padStart(2, '0'));
+    // Update seconds only if the element exists in the DOM
+    secondsEl && (secondsEl.textContent = seconds.toString().padStart(2, '0'));
     } else {
         // Wedding day has arrived!
     document.getElementById('countdown').innerHTML = '<h2 style="color: white; font-family: \'Amsterdam Four\', \'Alegreya\', serif; font-size: 3rem;">¡Es nuestro día especial!</h2>';
@@ -262,18 +270,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const galleryItems = document.querySelectorAll('.gallery-item');
     const detailCards = document.querySelectorAll('.detail-card');
     if (galleryItems.length || detailCards.length) {
-        const highlightObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                } else {
-                    entry.target.classList.remove('in-view');
-                }
+        // Prefer IntersectionObserver for efficient viewport detection
+        if ('IntersectionObserver' in window) {
+            const highlightObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        entry.target.classList.remove('in-view');
+                    }
+                });
+            }, {
+                // Trigger a bit earlier while scrolling on mobile
+                threshold: 0.2,
+                rootMargin: '0px 0px -15% 0px'
             });
-        }, { threshold: 0.35 });
 
-        galleryItems.forEach((item) => highlightObserver.observe(item));
-        detailCards.forEach((card) => highlightObserver.observe(card));
+            galleryItems.forEach((item) => highlightObserver.observe(item));
+            detailCards.forEach((card) => highlightObserver.observe(card));
+        } else {
+            // Fallback for older browsers: compute visibility on scroll/resize
+            const isInView = (el) => {
+                const rect = el.getBoundingClientRect();
+                const vh = window.innerHeight || document.documentElement.clientHeight;
+                const visibleTop = rect.top < vh * 0.85;
+                const visibleBottom = rect.bottom > vh * 0.15;
+                return visibleTop && visibleBottom;
+            };
+            const checkAll = () => {
+                galleryItems.forEach((el) => el.classList.toggle('in-view', isInView(el)));
+                detailCards.forEach((el) => el.classList.toggle('in-view', isInView(el)));
+            };
+            ['scroll', 'resize', 'load'].forEach((evt) => window.addEventListener(evt, checkAll, { passive: true }));
+            checkAll();
+        }
     }
 });
 
@@ -326,16 +356,8 @@ document.head.appendChild(style);
 // Create floating hearts periodically
 setInterval(createFloatingHeart, 3000);
 
-// Add parallax effect to hero section
-window.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    const rate = scrolled * -0.5;
-    
-    if (hero) {
-        hero.style.transform = `translateY(${rate}px)`;
-    }
-});
+// Remove parallax adjustments to avoid any cropping or layout gaps.
+// Keep hero positioning controlled purely by CSS.
 
 // Add click effect to buttons
 document.querySelectorAll('button').forEach(button => {

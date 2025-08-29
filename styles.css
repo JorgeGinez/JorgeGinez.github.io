@@ -92,6 +92,7 @@ body {
     position: relative;
 }
 
+    .card-icon img { width: min(60vw, 300px); }
 /* Overlay texture so it is visible over section backgrounds */
 body::before {
     content: '';
@@ -143,6 +144,7 @@ body::after {
 @media (max-width: 768px) {
     .hero {
         background-position: 45% 38%;
+        padding-top: 8vh; /* push content down on tablets */
     }
 }
 
@@ -229,8 +231,23 @@ body::after {
 .footer .couple-names .ampersand {
     font-family: 'Caslon 540', 'Amsterdam Four', 'Alegreya', serif;
     animation: none;
-    color: inherit;
-    text-shadow: none;
+    /* Metallic gold effect */
+    background-image: linear-gradient(
+        180deg,
+        #fff3c4 0%,
+        #f6e27a 12%,
+        #e9c24c 28%,
+        #d4af37 45%,
+        #a67c00 60%,
+        #d4af37 78%,
+        #f6e27a 90%,
+        #fff3c4 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.35), 0 2px 6px rgba(0,0,0,0.25);
     margin: 0 8px;
     font-size: 1em;
 }
@@ -304,6 +321,25 @@ body::after {
     column-gap: 16px;
     row-gap: 8px; /* less space above items */
     padding: 8px 12px 22px; /* more bottom padding to separate the button from the card edge */
+    box-sizing: border-box;
+}
+
+/* Mobile fixes: ensure grid uses full width without horizontal scroll */
+@media (max-width: 600px) {
+    .wedding-details .container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    .details-grid {
+        grid-template-columns: 1fr; /* single column to avoid clipping */
+        column-gap: 12px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .detail-card {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 .detail-card {
@@ -321,6 +357,8 @@ body::after {
     z-index: 2;
     /* more space below each card without affecting top */
     margin-bottom: 14px;
+    max-width: 100%;
+    overflow: hidden; /* prevent inner overflow on small screens */
 }
 
 .detail-card:hover,
@@ -355,14 +393,21 @@ body::after {
     stroke-linejoin: round;
 }
 
-/* PNG icon sizing for ceremony/reception */
+/* PNG icon sizing for ceremony/reception (responsive) */
 .card-icon img {
-    width: 350px;
-    height: 350px;
+    width: min(70vw, 320px);
+    height: auto;
+    max-width: 100%;
     object-fit: contain;
     display: block;
     margin: 0 auto;
     filter: drop-shadow(0 1px 0 rgba(0,0,0,0.03));
+}
+
+@media (max-width: 480px) {
+    .card-icon img {
+        width: min(82vw, 260px);
+    }
 }
 
 .detail-card:hover .card-icon,
@@ -1490,8 +1535,9 @@ body::after {
     .hero-content {
         padding: 0 20px;
     }
-    /* Reduce only the HERO title on phones */
-    .hero .couple-names { font-size: 2.2rem; line-height: 1.15; }
+    /* Slightly larger hero title on phones and lower on the page */
+    .hero { padding-top: 12vh; }
+    .hero .couple-names { font-size: 2.5rem; line-height: 1.15; }
     
     .couple-names {
         font-size: 2rem;
