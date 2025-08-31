@@ -470,7 +470,7 @@ window.addEventListener('load', function() {
                     font-size: 3rem;
                     color: #0C4A6E;
                     margin-bottom: 20px;
-                ">Rosa & Honorato</div>
+                ">Honorato & Rosa</div>
                 <div style="
                     width: 50px;
                     height: 50px;
