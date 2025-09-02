@@ -95,8 +95,10 @@ body {
     overflow-x: hidden;
     /* Paper background base */
     background-color: var(--paper-bg);
-    background-attachment: fixed;
+    background-attachment: scroll; /* avoid mobile white gaps from fixed backgrounds */
     position: relative;
+    margin: 0;
+    padding: 0;
 }
 
     .card-icon img { width: min(60vw, 300px); }
@@ -116,7 +118,7 @@ body::before {
     opacity: 0.35;
 }
 
-/* Subtle vignette to emphasize paper edges */
+/* Simple vignette without complex florals to avoid white gaps */
 body::after {
     content: '';
     position: fixed;
@@ -126,8 +128,6 @@ body::after {
     background: radial-gradient(ellipse at center, rgba(0,0,0,0) 62%, rgba(0,0,0,0.06) 100%);
     mix-blend-mode: multiply;
 }
-
-/* Reusable floral overlays (subtle, behind content) */
 .with-florals {
     position: relative;
     /* allow slight overlap so the eye sees continuity across sections */
@@ -138,7 +138,7 @@ body::after {
     content: '';
     position: absolute;
     pointer-events: none;
-    z-index: 0; /* sit behind content */
+    z-index: 1; /* above body vignette, below content */
     opacity: 0.16; /* subtle by default */
     background-image: var(--floral-3); /* default, overridden per-section below */
     background-repeat: no-repeat;
@@ -190,23 +190,23 @@ body::after {
 .footer.with-florals::before { background-image: var(--floral-4); opacity: 0.14; top: -10%; left: -10%; }
 .footer.with-florals::after  { background-image: var(--floral-6); opacity: 0.14; bottom: -12%; right: -12%; transform: scaleX(-1) rotate(6deg); }
 
-/* Footer florals: ensure they are fully inside and not visibly cropped */
+/* Footer: completely separate and smaller florals */
 .footer.with-florals::before,
 .footer.with-florals::after {
-    width: min(38vw, 420px);
-    height: min(38vw, 420px);
+    width: min(22vw, 240px);
+    height: min(22vw, 240px);
     mix-blend-mode: multiply;
 }
 .footer.with-florals::before {
-    top: 4%;
-    left: 2%;
-    opacity: 0.12; /* slightly subtler in footer */
+    top: 14%;
+    left: 10%;
+    opacity: 0.06;
     transform: rotate(4deg);
 }
 .footer.with-florals::after {
-    bottom: 2%;
-    right: 1%;
-    opacity: 0.12;
+    bottom: 14%;
+    right: 10%;
+    opacity: 0.06;
 }
 
 @media (max-width: 900px) {
@@ -230,6 +230,12 @@ body::after {
     .footer.with-florals::after { bottom: 6%; right: 6%; }
 }
 
+/* Ultra-small devices: remove footer florals entirely to avoid crowding */
+@media (max-width: 360px) {
+    .footer.with-florals::before,
+    .footer.with-florals::after { content: none !important; display: none !important; }
+}
+
 @media (max-width: 900px) {
     .with-florals::before {
         top: -10%; left: -10%;
@@ -244,17 +250,50 @@ body::after {
 }
 
 @media (max-width: 520px) {
+    /* Mobile: Show florals but smaller and well-positioned */
     .with-florals::before,
-    .with-florals::after { opacity: 0.18; }
-    .with-florals::before {
-        top: -16%; left: -18%;
-        width: 88vw; height: 88vw;
-        transform: rotate(-4deg);
+    .with-florals::after { 
+        display: block !important;
+        opacity: 0.15 !important; 
+        width: 45vw !important; 
+        height: 45vw !important;
+        z-index: 0 !important;
     }
-    .with-florals::after {
-        bottom: -18%; right: -20%;
-        width: 92vw; height: 92vw;
-        transform: scaleX(-1) rotate(5deg);
+    .with-florals::before { 
+        top: -18% !important; 
+        left: -20% !important; 
+    }
+    .with-florals::after  { 
+        bottom: -18% !important; 
+        right: -20% !important; 
+    }
+
+    /* Specific sections - ensure they all show */
+    .wedding-details.with-florals::before,
+    .wedding-details.with-florals::after,
+    .countdown-section.with-florals::before,
+    .countdown-section.with-florals::after,
+    .timeline-section.with-florals::before,
+    .timeline-section.with-florals::after,
+    .simple-gallery.with-florals::before,
+    .simple-gallery.with-florals::after {
+        display: block !important;
+        opacity: 0.12 !important;
+        width: 42vw !important;
+        height: 42vw !important;
+    }
+    
+    /* Timeline: keep only one floral for cleaner look */
+    .timeline-section.with-florals::after { 
+        display: none !important;
+    }
+    
+    /* Gallery: make even more subtle */
+    .simple-gallery.with-florals::before,
+    .simple-gallery.with-florals::after {
+        opacity: 0.08 !important;
+        width: 38vw !important;
+        height: 38vw !important;
     }
 }
 
@@ -297,6 +336,30 @@ body::after {
     bottom: 0;
     background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4));
     opacity: 0.6;
+}
+
+/* Footer-specific spacing to avoid crowding (placed last to override generic rules) */
+@media (max-width: 900px) {
+    .footer.with-florals::before,
+    .footer.with-florals::after {
+        width: min(36vw, 300px);
+        height: min(36vw, 300px);
+        opacity: 0.10; /* subtler on tablet */
+    }
+    .footer.with-florals::before { top: 8%; left: 6%; }
+    .footer.with-florals::after  { bottom: 8%; right: 6%; }
+}
+
+@media (max-width: 600px) {
+    /* Keep only one floral in the footer on phones for clarity */
+    .footer.with-florals::after { content: none !important; display: none !important; }
+    .footer.with-florals::before {
+    width: 36vw;
+    height: 36vw;
+    top: 10%;
+    left: 8%;
+    opacity: 0.10; /* lighter on phones */
+    }
 }
 
 .hero-content {
@@ -429,9 +492,9 @@ body::after {
     background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
     background-blend-mode: multiply, multiply, normal, normal, multiply;
     background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
-    background-attachment: fixed, fixed, fixed, fixed, fixed;
+    background-attachment: scroll, scroll, scroll, scroll, scroll;
     position: relative;
-    overflow: hidden; /* ensure its florals don't overlap the hero above */
+    overflow: hidden; /* only first section clips, to protect the hero */
 }
 
 .section-title {
@@ -551,17 +614,37 @@ body::after {
     }
 }
 
-/* Mobile floral density tweaks */
-@media (max-width: 520px) {
-    /* Make generic florals smaller and lighter on phones */
-    .with-florals::before,
-    .with-florals::after { opacity: 0.10; }
-    .with-florals::before { top: -22%; left: -24%; width: 56vw; height: 56vw; }
-    .with-florals::after  { bottom: -22%; right: -24%; width: 60vw; height: 60vw; }
-
-    /* Timeline: only one floral and smaller to avoid crowding with icons/text */
-    .timeline-section.with-florals::after { content: none; }
-    .timeline-section.with-florals::before { opacity: 0.08; top: -26%; left: -28%; width: 48vw; height: 48vw; }
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 0 20px;
+    }
+    /* Hero title adjustments */
+    .hero .couple-names { font-size: 2.5rem; line-height: 1.15; }
+    
+    .couple-names {
+        font-size: 2rem;
+    }
+    
+    .wedding-date {
+        font-size: 1.2rem;
+    }
+    
+    .invitation-text {
+        font-size: 1rem;
+    }
+    
+    .detail-card {
+        padding: 30px 20px;
+    }
+    
+    .countdown-item {
+        min-width: 80px;
+    }
+    
+    .countdown-number {
+        font-size: 1.5rem;
+        padding: 10px;
+    }
 }
 
 .detail-card:hover .card-icon,
@@ -636,7 +719,7 @@ body::after {
     background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
     background-blend-mode: multiply, multiply, normal, normal, multiply;
     background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
-    background-attachment: fixed, fixed, fixed, fixed, fixed;
+    background-attachment: scroll, scroll, scroll, scroll, scroll;
     color: #0C4A6E;
     text-align: center;
     position: relative;
@@ -706,9 +789,8 @@ body::after {
     background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
     background-blend-mode: multiply, multiply, normal, normal, multiply;
     background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
-    background-attachment: fixed, fixed, fixed, fixed, fixed;
+    background-attachment: scroll, scroll, scroll, scroll, scroll;
     position: relative;
-    overflow: hidden; /* keep florals contained in the section */
 }
 
 .timeline-header {
@@ -901,7 +983,12 @@ body::after {
 /* Photo Gallery Section */
 .gallery-section {
     padding: 80px 0;
+        margin: 0;
+        padding: 0;
     background: #f8f9fa;
+
+    /* Root safeguard: prevent any horizontal scroll on mobile */
+    html { overflow-x: hidden; width: 100%; }
     position: relative;
 }
 
@@ -1073,7 +1160,7 @@ body::after {
     background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
     background-blend-mode: multiply, multiply, normal, normal, multiply;
     background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
-    background-attachment: fixed, fixed, fixed, fixed, fixed;
+    background-attachment: scroll, scroll, scroll, scroll, scroll;
 }
 
 
@@ -1084,7 +1171,7 @@ body::after {
     background-image: var(--paper-grain), var(--paper-grain), var(--paper-speckle), var(--paper-speckle), var(--paper-fibers);
     background-blend-mode: multiply, multiply, normal, normal, multiply;
     background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
-    background-attachment: fixed, fixed, fixed, fixed, fixed;
+    background-attachment: scroll, scroll, scroll, scroll, scroll;
 }
 
 .info-card {
@@ -1180,6 +1267,8 @@ body::after {
     .gallery-item.wide,
     .gallery-item.tall,
     .gallery-item.hero { grid-column: span 2; aspect-ratio: 4 / 3; }
+    /* Tighten space before footer on phones */
+    .simple-gallery { padding-bottom: 12px; }
 }
 
 /* Structured gallery layout similar to the reference (ordered) */
@@ -1448,10 +1537,14 @@ body::after {
 .footer {
     background: var(--accent-blue); /* primary */
     color: white;
-    padding: 80px 0 60px; /* more room so florals fit without being cut */
+    padding: 80px 0 60px; /* desktop default */
     text-align: center;
     position: relative;
     overflow: hidden; /* clip pseudo floral overlays to footer box to avoid white bands */
+}
+
+@media (max-width: 520px) {
+    .footer { padding-top: 56px; }
 }
 
 .footer-content {
@@ -1636,7 +1729,7 @@ body::after {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .couple-names {
         font-size: 2.5rem;
     }
@@ -1687,36 +1780,20 @@ body::after {
     }
 }
 
-@media (max-width: 480px) {
-    .hero-content {
-        padding: 0 20px;
-    }
-    /* Slightly larger hero title on phones and lower on the page */
-    .hero { padding-top: 12vh; }
-    .hero .couple-names { font-size: 2.5rem; line-height: 1.15; }
-    
-    .couple-names {
-        font-size: 2rem;
-    }
-    
-    .wedding-date {
-        font-size: 1.2rem;
-    }
-    
-    .invitation-text {
-        font-size: 1rem;
-    }
-    
-    .detail-card {
-        padding: 30px 20px;
-    }
-    
-    .countdown-item {
-        min-width: 80px;
-    }
-    
-    .countdown-number {
-        font-size: 1.5rem;
-        padding: 10px;
-    }
+@media (max-width: 520px) {
+    /* Prevent any horizontal scroll and tighten seams between sections */
+    html, body { overflow-x: hidden; }
+
+    /* Keep hero full height without extra padding to avoid overflow */
+    .hero { height: 100vh; min-height: 100vh; padding-top: 0; }
+
+    /* Eliminate small white seams between stacked sections */
+    .wedding-details,
+    .countdown-section,
+    .timeline-section,
+    .simple-gallery,
+    .info-section { margin-top: 0; margin-bottom: 0; }
+
+    /* Slight negative overlap for first section to hide any 1px gap */
+    .wedding-details { margin-top: -1px; }
 }
