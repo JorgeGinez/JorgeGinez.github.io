@@ -387,7 +387,7 @@ body::after {
     .wedding-details.with-florals::before { 
         opacity: 0.16 !important; 
         width: 38vw !important; height: 38vw !important; 
-        top: -18% !important; left: -18% !important; 
+        top: 1% !important; left: -10% !important; 
     }
     .wedding-details.with-florals::after  { 
         opacity: 0.14 !important; 
