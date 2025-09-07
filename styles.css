@@ -5,6 +5,15 @@
     box-sizing: border-box;
 }
 
+/* Prevent horizontal scroll globally but allow vertical overflow for floral continuity */
+html { 
+    overflow-x: hidden; 
+    width: 100%; 
+}
+
+/* Media elements scale with layout width */
+img, svg, video, canvas { max-width: 100%; height: auto; }
+
 :root {
     /* Paper tones (backgrounds) */
     --paper-bg: #f8f7f3;
@@ -26,6 +35,8 @@
     --floral-3: url('svg/floral3.svg');
     --floral-4: url('svg/floral4.svg');
     --floral-6: url('svg/floral6.svg');
+    --floral-7: url('svg/floral7.svg');
+    --floral-8: url('svg/floral8.svg');
     /* Large pattern tiling controls */
     --floral-opacity: 0.12;
 }
@@ -92,16 +103,15 @@ body {
     font-family: 'Alegreya', serif;
     line-height: 1.6;
     color: var(--text-main); /* neutral dark */
-    overflow-x: hidden;
+    overflow-x: hidden; /* only restrict horizontal scroll */
     /* Paper background base */
     background-color: var(--paper-bg);
     background-attachment: scroll; /* avoid mobile white gaps from fixed backgrounds */
     position: relative;
     margin: 0;
     padding: 0;
+    min-height: 100vh; /* ensure no bottom blank on short content */
 }
-
-    .card-icon img { width: min(60vw, 300px); }
 /* Overlay texture so it is visible over section backgrounds */
 body::before {
     content: '';
@@ -130,8 +140,11 @@ body::after {
 }
 .with-florals {
     position: relative;
-    /* allow slight overlap so the eye sees continuity across sections */
+    /* No overflow restrictions to allow continuous floral flow */
 }
+
+/* Seamless joins: nudge stacked sections by 2px so no line appears */
+.with-florals + .with-florals { margin-top: -2px; }
 
 .with-florals::before,
 .with-florals::after {
@@ -140,7 +153,7 @@ body::after {
     pointer-events: none;
     z-index: 1; /* above body vignette, below content */
     opacity: 0.16; /* subtle by default */
-    background-image: var(--floral-3); /* default, overridden per-section below */
+    background-image: var(--floral-7); /* default now uses floral7 */
     background-repeat: no-repeat;
     background-size: contain;
     filter: saturate(0.85) contrast(0.95);
@@ -152,61 +165,117 @@ body::after {
 
 /* Top-left flourish */
 .with-florals::before {
-    top: -6%;
-    left: -4%;
-    width: min(42vw, 520px);
-    height: min(42vw, 520px);
-    transform: rotate(-8deg);
+    top: -10%;
+    left: -8%;
+    width: min(46vw, 580px);
+    height: min(46vw, 580px);
+    transform: rotate(-5deg);
 }
 
 /* Bottom-right flourish (mirrored) */
 .with-florals::after {
-    bottom: -8%;
-    right: -6%;
-    width: min(46vw, 560px);
-    height: min(46vw, 560px);
-    transform: scaleX(-1) rotate(10deg);
+    bottom: -10%;
+    right: -8%;
+    width: min(48vw, 600px);
+    height: min(48vw, 600px);
+    transform: scaleX(-1) rotate(6deg);
 }
 
 /* Per-section: choose which floral design and opacity */
-/* Wedding Details: mix floral3 + floral4 */
-.wedding-details.with-florals::before { background-image: var(--floral-3); opacity: 0.14; }
-.wedding-details.with-florals::after  { background-image: var(--floral-4); opacity: 0.14; }
+/* Wedding Details: use floral7 (TL) and floral8 (BR) - NO extender hacia arriba para no interferir con hero */
+.wedding-details.with-florals::before { 
+    background-image: var(--floral-7); 
+    opacity: 0.22; 
+    top: 5%; /* Cambiar de -14% a 5% para no cubrir hero */
+    left: -14%;
+    width: min(60vw, 800px);
+    height: min(60vw, 800px);
+    transform: rotate(-4deg);
+}
+.wedding-details.with-florals::after  { 
+    background-image: var(--floral-8); 
+    opacity: 0.14; 
+    bottom: -20%;
+    right: -16%;
+    width: min(44vw, 560px);
+    height: min(44vw, 560px);
+    transform: scaleX(-1) rotate(6deg);
+}
 
-/* Countdown: floral4 + floral6 to empalmar con Minuto a minuto */
-.countdown-section.with-florals::before { background-image: var(--floral-4); opacity: 0.14; }
-.countdown-section.with-florals::after  { background-image: var(--floral-6); opacity: 0.14; bottom: -10%; right: -8%; }
+/* Countdown: floral4 + floral6 - extender para conectar con Timeline */
+.countdown-section.with-florals::before { 
+    background-image: var(--floral-4); 
+    opacity: 0.14; 
+    top: -22%; 
+    left: -16%; 
+    width: min(56vw, 720px);
+    height: min(56vw, 720px);
+}
+.countdown-section.with-florals::after  { 
+    background-image: var(--floral-6); 
+    opacity: 0.14; 
+    bottom: -15%; 
+    right: -12%; 
+    width: min(52vw, 680px);
+    height: min(52vw, 680px);
+}
 
-/* Timeline: continuar desde Countdown (usar mismo 6 arriba) y 3 abajo */
-.timeline-section.with-florals::before { background-image: var(--floral-6); opacity: 0.14; top: -12%; left: -6%; }
-.timeline-section.with-florals::after  { background-image: var(--floral-3); opacity: 0.14; }
+/* Timeline: continuar desde Countdown con mejor conexión */
+.timeline-section.with-florals::before { 
+    background-image: var(--floral-6); 
+    opacity: 0.22; 
+    top: -18%; 
+    left: -12%; 
+    width: min(58vw, 760px); 
+    height: min(58vw, 760px); 
+}
+.timeline-section.with-florals::after  { 
+    background-image: var(--floral-7); 
+    opacity: 0.16; 
+    bottom: -18%;
+    right: -14%;
+    width: min(54vw, 700px);
+    height: min(54vw, 700px);
+}
 
-/* Gallery: keep very subtle and pushed further out so it never covers photos */
-/* Gallery: solo 3/6 (no 5 aquí) y lejos del contenido */
-.simple-gallery.with-florals::before { background-image: var(--floral-3); opacity: 0.08; top: -18%; left: -18%; }
-.simple-gallery.with-florals::after  { background-image: var(--floral-6); opacity: 0.08; bottom: -20%; right: -20%; }
+.simple-gallery.with-florals::before { 
+    background-image: var(--floral-7); 
+    opacity: 0.10; 
+    top: -20%; 
+    left: -16%; 
+    width: min(58vw, 750px);
+    height: min(58vw, 750px);
+}
+.simple-gallery.with-florals::after  { 
+    background-image: var(--floral-6); 
+    opacity: 0.08; 
+    bottom: -25%; 
+    right: -22%; 
+    width: min(60vw, 780px);
+    height: min(60vw, 780px);
+}
 
 /* Footer: sin floral5; usar 3/4/6 y evitar bloques blancos */
 .footer.with-florals::before { background-image: var(--floral-4); opacity: 0.14; top: -10%; left: -10%; }
 .footer.with-florals::after  { background-image: var(--floral-6); opacity: 0.14; bottom: -12%; right: -12%; transform: scaleX(-1) rotate(6deg); }
 
-/* Footer: completely separate and smaller florals */
+/* Footer: completely separate and adjustable florals */
 .footer.with-florals::before,
 .footer.with-florals::after {
-    width: min(22vw, 240px);
-    height: min(22vw, 240px);
+    width: min(26vw, 280px);
+    height: min(26vw, 280px);
     mix-blend-mode: multiply;
 }
 .footer.with-florals::before {
     top: 14%;
     left: 10%;
-    opacity: 0.06;
+    opacity: 0.12;
     transform: rotate(4deg);
 }
 .footer.with-florals::after {
     bottom: 14%;
     right: 10%;
-    opacity: 0.06;
+    opacity: 0.12;
 }
 
 @media (max-width: 900px) {
@@ -239,12 +308,12 @@ body::after {
 @media (max-width: 900px) {
     .with-florals::before {
         top: -10%; left: -10%;
-        width: min(58vw, 480px); height: min(58vw, 480px);
+    width: min(52vw, 480px); height: min(52vw, 480px);
         transform: rotate(-6deg);
     }
     .with-florals::after {
         bottom: -12%; right: -10%;
-        width: min(62vw, 520px); height: min(62vw, 520px);
+    width: min(56vw, 520px); height: min(56vw, 520px);
         transform: scaleX(-1) rotate(7deg);
     }
 }
@@ -255,18 +324,12 @@ body::after {
     .with-florals::after { 
         display: block !important;
         opacity: 0.15 !important; 
-        width: 45vw !important; 
-        height: 45vw !important;
+        width: 40vw !important; 
+        height: 40vw !important;
         z-index: 0 !important;
     }
-    .with-florals::before { 
-        top: -18% !important; 
-        left: -20% !important; 
-    }
-    .with-florals::after  { 
-        bottom: -18% !important; 
-        right: -20% !important; 
-    }
+    .with-florals::before { top: -18% !important; left: -18% !important; }
+    .with-florals::after  { bottom: -14% !important; right: -16% !important; }
 
     /* Specific sections - ensure they all show */
     .wedding-details.with-florals::before,
@@ -283,9 +346,22 @@ body::after {
         height: 42vw !important;
     }
     
-    /* Timeline: keep only one floral for cleaner look */
+    /* Timeline: keep only one floral for cleaner look but make it more visible */
+    .timeline-section.with-florals::before {
+    display: block !important;
+    opacity: 0.20 !important;
+    width: 46vw !important;
+    height: 46vw !important;
+    top: -22% !important; 
+    left: -24% !important;
+    }
     .timeline-section.with-florals::after { 
-        display: none !important;
+        display: block !important;
+        opacity: 0.10 !important;
+        width: 32vw !important;
+        height: 32vw !important;
+        bottom: -12% !important; 
+        right: -14% !important;
     }
     
     /* Gallery: make even more subtle */
@@ -296,6 +372,17 @@ body::after {
         height: 38vw !important;
     }
 }
+    /* Wedding details: avoid overlap and stay off the edges on phones */
+    .wedding-details.with-florals::before { 
+        opacity: 0.16 !important; 
+        width: 38vw !important; height: 38vw !important; 
+        top: -18% !important; left: -18% !important; 
+    }
+    .wedding-details.with-florals::after  { 
+        opacity: 0.14 !important; 
+        width: 36vw !important; height: 36vw !important; 
+        bottom: -20% !important; right: -20% !important; 
+    }
 
 .container {
     max-width: 1200px;
@@ -317,7 +404,12 @@ body::after {
     text-align: center;
     padding-top: 2vh;
     isolation: isolate; /* create stacking context to keep hero above external overlays */
-    z-index: 1;
+    z-index: 10; /* Aumentar z-index para estar por encima de flores */
+}
+
+/* Prefer new small viewport units when supported to avoid jumps on rotate */
+@supports (height: 100svh) {
+    .hero { height: 100svh; min-height: 100svh; }
 }
 
 @media (max-width: 768px) {
@@ -494,7 +586,6 @@ body::after {
     background-size: 180px 180px, 140px 140px, 260px 260px, 220px 220px, 320px 320px;
     background-attachment: scroll, scroll, scroll, scroll, scroll;
     position: relative;
-    overflow: hidden; /* only first section clips, to protect the hero */
 }
 
 .section-title {
@@ -562,7 +653,6 @@ body::after {
     /* more space below each card without affecting top */
     margin-bottom: 14px;
     max-width: 100%;
-    overflow: hidden; /* prevent inner overflow on small screens */
 }
 
 .detail-card:hover,
@@ -614,6 +704,13 @@ body::after {
     }
 }
 
+/* Medium screens: soften florals to avoid stacking while maintaining continuity */
+@media (max-width: 820px) and (min-width: 521px) {
+    .wedding-details.with-florals::after { opacity: 0.12; }
+    .countdown-section.with-florals::before { opacity: 0.12; }
+    .timeline-section.with-florals::after { opacity: 0.12; }
+}
+
 @media (max-width: 480px) {
     .hero-content {
         padding: 0 20px;
@@ -645,6 +742,29 @@ body::after {
         font-size: 1.5rem;
         padding: 10px;
     }
+}
+
+/* Small-height landscape phones: tighten layout and florals to avoid overflow */
+@media (orientation: landscape) and (max-height: 480px) {
+    body { overflow-x: hidden; }
+    .hero { padding-top: 4vh; align-items: center; }
+    .hero .couple-names { font-size: 2.2rem; }
+    .wedding-date { font-size: 1rem; }
+    .invitation-text { font-size: 0.95rem; }
+
+    .countdown { gap: 20px; }
+    .countdown-item { min-width: 100px; }
+    .countdown-number { font-size: 2.2rem; padding: 14px; }
+
+    /* Shrink decorative florals further in this tight height mode */
+    .with-florals::before,
+    .with-florals::after {
+    width: 30vw !important;
+    height: 30vw !important;
+    opacity: 0.10 !important;
+    }
+    .wedding-details.with-florals::before { top: -16% !important; left: -16% !important; }
+    .wedding-details.with-florals::after  { bottom: -16% !important; right: -16% !important; }
 }
 
 .detail-card:hover .card-icon,
@@ -1545,6 +1665,9 @@ body::after {
 
 @media (max-width: 520px) {
     .footer { padding-top: 56px; }
+    /* On phones keep only one floral but make it a bit stronger */
+    .footer.with-florals::after { content: none !important; display: none !important; }
+    .footer.with-florals::before { opacity: 0.16; width: 64vw; height: 64vw; top: 10%; left: 8%; }
 }
 
 .footer-content {
@@ -1557,6 +1680,8 @@ body::after {
 .footer .couple-names {
     color: #fff; /* footer names in white */
     margin-bottom: 42px; /* balance with footer florals */
+    font-weight: 300; /* thinner specifically in footer */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.25); /* lighter shadow so it se vea más delgadita */
 }
 
 .couple-initials {
@@ -1796,4 +1921,6 @@ body::after {
 
     /* Slight negative overlap for first section to hide any 1px gap */
     .wedding-details { margin-top: -1px; }
+    /* Slight negative overlap at footer bottom to hide tiny white strip */
+    .footer { margin-bottom: -1px; }
 }
