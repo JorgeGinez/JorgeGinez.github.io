@@ -463,7 +463,10 @@ body::after {
 @media (max-width: 768px) {
     .hero {
         background-position: 45% 38%;
-        padding-top: 8vh; /* push content down on tablets */
+        padding-top: 8vh;
+    }
+    .hero-content {
+        margin-top: 8vh; /* Reduced from 12vh to move content slightly up */
     }
 }
 
@@ -751,6 +754,7 @@ body::after {
 @media (max-width: 480px) {
     .hero-content {
         padding: 0 20px;
+        margin-top: 10vh; /* Reduced from 15vh to move text slightly up */
     }
     /* Hero title adjustments */
     .hero .couple-names { font-size: 2.5rem; line-height: 1.15; }
