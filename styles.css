@@ -186,7 +186,6 @@ body::after {
 .wedding-details.with-florals::before { 
     background-image: var(--floral-7); 
     opacity: 0.22; 
-    top: 5%; /* Cambiar de -14% a 5% para no cubrir hero */
     left: -14%;
     width: min(60vw, 800px);
     height: min(60vw, 800px);
@@ -255,65 +254,97 @@ body::after {
     height: min(60vw, 780px);
 }
 
-/* Footer: hacer que las flores salgan de las orillas */
-.footer.with-florals::before { 
-    background-image: var(--floral-4); 
-    opacity: 0.14; 
-    top: -20%; /* Extender hacia arriba */
-    left: -25%; /* Extender hacia la izquierda para que salga de la orilla */
+/* Footer: hacer que las flores salgan de las orillas pero sean más visibles */
+.footer.with-florals::before {
+    background-image: var(--floral-4);
+    opacity: 0.35; /* Aumentar opacidad significativamente */
+    top: -15%; /* Menos extensión hacia arriba para mantener visibilidad */
+    left: -20%; /* Menos extensión hacia la izquierda */
 }
-.footer.with-florals::after  { 
-    background-image: var(--floral-6); 
-    opacity: 0.14; 
-    bottom: -25%; /* Extender hacia abajo */
-    right: -25%; /* Extender hacia la derecha para que salga de la orilla */
-    transform: scaleX(-1) rotate(6deg); 
+.footer.with-florals::after  {
+    background-image: var(--floral-6);
+    opacity: 0.32; /* Aumentar opacidad significativamente */
+    bottom: -15%; /* Menos extensión hacia abajo */
+    right: -20%; /* Menos extensión hacia la derecha */
+    transform: scaleX(-1) rotate(6deg);
 }
 
 /* Footer: completely separate and adjustable florals */
 .footer.with-florals::before,
 .footer.with-florals::after {
-    width: min(45vw, 500px); /* Aumentar tamaño para que se vean al salir de las orillas */
-    height: min(45vw, 500px);
-    mix-blend-mode: multiply;
+    mix-blend-mode: overlay; /* Mejor modo de mezcla para contraste sobre azul */
+    filter: contrast(1.3) saturate(1.2) brightness(1.1); /* Más contraste y brillo */
 }
 .footer.with-florals::before {
-    top: -20%;
-    left: -25%;
-    opacity: 0.12;
-    transform: rotate(4deg);
+    width: min(45vw, 550px); /* Flor izquierda más pequeña */
+    height: min(45vw, 550px);
+    top: -3%; /* Bajar aún más la flor izquierda */
+    left: -5%; /* Mover más hacia la derecha */
+    opacity: 0.35;
+    transform: rotate(8deg); /* Mantener rotación dinámica */
 }
 .footer.with-florals::after {
-    bottom: -25%;
-    right: -25%;
-    opacity: 0.12;
+    width: min(60vw, 700px); /* Flor derecha mantiene tamaño */
+    height: min(60vw, 700px);
+    bottom: -75%; /* Bajar directamente mucho más la flor derecha */
+    right: -20%;
+    opacity: 0.32;
 }
 
 @media (max-width: 900px) {
-    .footer.with-florals::before,
-    .footer.with-florals::after {
-        width: min(60vw, 480px); /* Aumentar tamaño para mantener efecto */
-        height: min(60vw, 480px);
+    .footer.with-florals::before {
+        width: min(55vw, 450px); /* Flor izquierda más pequeña en tablets */
+        height: min(55vw, 450px);
+        top: 0%; /* Bajar más en tablets */
+        left: -3%; /* Más hacia la derecha en tablets */
+        opacity: 0.32; /* Opacidad visible en tablets */
     }
-    .footer.with-florals::before { top: -18%; left: -22%; } /* Mantener fuera de orillas */
-    .footer.with-florals::after { bottom: -20%; right: -22%; }
+    .footer.with-florals::after {
+        width: min(70vw, 600px); /* Flor derecha mantiene tamaño en tablets */
+        height: min(70vw, 600px);
+        bottom: -70%; /* Bajar directamente más en tablets */
+        right: -18%; 
+        opacity: 0.28; 
+    }
 }
 
 @media (max-width: 520px) {
-    .footer.with-florals::before,
-    .footer.with-florals::after {
-        width: 80vw; /* Aumentar tamaño */
-        height: 80vw;
-        opacity: 0.16; /* compensate for smaller size */
+    .footer.with-florals::before {
+        width: 70vw; /* Flor izquierda más pequeña en móviles */
+        height: 70vw;
+        opacity: 0.40; /* Opacidad alta en móviles */
+        mix-blend-mode: multiply; /* Modo más suave en móviles */
+        top: 3%; /* Bajar más en móviles */
+        left: -2%; /* Más hacia la derecha en móviles */
+        filter: contrast(1.4) saturate(1.3) brightness(1.2); /* Más definición */
     }
-    .footer.with-florals::before { top: -15%; left: -20%; } /* Mantener saliendo de orillas */
-    .footer.with-florals::after { bottom: -18%; right: -20%; }
+    .footer.with-florals::after {
+        width: 90vw; /* Flor derecha mantiene tamaño generoso en móviles */
+        height: 90vw;
+        opacity: 0.40;
+        mix-blend-mode: multiply;
+        bottom: -65%; /* Bajar directamente más en móviles */
+        right: -15%; 
+        filter: contrast(1.4) saturate(1.3) brightness(1.2);
+    }
 }
 
-/* Ultra-small devices: remove footer florals entirely to avoid crowding */
+/* Ultra-small devices: mantener flores visibles */
 @media (max-width: 360px) {
-    .footer.with-florals::before,
-    .footer.with-florals::after { content: none !important; display: none !important; }
+    .footer.with-florals::before {
+        width: 65vw; /* Flor izquierda más pequeña */
+        height: 65vw;
+        opacity: 0.35; /* Mantener buena visibilidad */
+        top: 5%; /* Bajar más en pantallas pequeñas */
+        left: 0%; /* Más hacia la derecha */
+    }
+    .footer.with-florals::after {
+        width: 85vw; /* Flor derecha mantiene tamaño */
+        height: 85vw;
+        opacity: 0.35;
+        bottom: -60%; /* Bajar directamente más */
+        right: -12%; 
+    }
 }
 
 @media (max-width: 900px) {
@@ -332,10 +363,10 @@ body::after {
 @media (max-width: 520px) {
     /* Mobile: Show florals but smaller and well-positioned */
     .with-florals::before,
-    .with-florals::after { 
+    .with-florals::after {
         display: block !important;
-        opacity: 0.15 !important; 
-        width: 40vw !important; 
+        opacity: 0.15 !important;
+        width: 40vw !important;
         height: 40vw !important;
         z-index: 0 !important;
     }
@@ -356,25 +387,25 @@ body::after {
         width: 42vw !important;
         height: 42vw !important;
     }
-    
+
     /* Timeline: keep only one floral for cleaner look but make it more visible */
     .timeline-section.with-florals::before {
     display: block !important;
     opacity: 0.20 !important;
     width: 46vw !important;
     height: 46vw !important;
-    top: -22% !important; 
+    top: -22% !important;
     left: -24% !important;
     }
-    .timeline-section.with-florals::after { 
+    .timeline-section.with-florals::after {
         display: block !important;
         opacity: 0.10 !important;
         width: 32vw !important;
         height: 32vw !important;
-        bottom: -12% !important; 
+        bottom: -12% !important;
         right: -14% !important;
     }
-    
+
     /* Gallery: make even more subtle */
     .simple-gallery.with-florals::before,
     .simple-gallery.with-florals::after {
@@ -384,15 +415,15 @@ body::after {
     }
 }
     /* Wedding details: avoid overlap and stay off the edges on phones */
-    .wedding-details.with-florals::before { 
-        opacity: 0.16 !important; 
-        width: 38vw !important; height: 38vw !important; 
-        top: 1% !important; left: -10% !important; 
+    .wedding-details.with-florals::before {
+        opacity: 0.16 !important;
+        width: 38vw !important; height: 38vw !important;
+        top: 1% !important; left: -10% !important;
     }
-    .wedding-details.with-florals::after  { 
-        opacity: 0.14 !important; 
-        width: 36vw !important; height: 36vw !important; 
-        bottom: -20% !important; right: -20% !important; 
+    .wedding-details.with-florals::after  {
+        opacity: 0.14 !important;
+        width: 36vw !important; height: 36vw !important;
+        bottom: -20% !important; right: -20% !important;
     }
 
 .container {
@@ -402,6 +433,12 @@ body::after {
 }
 
 /* Hero Section */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
 .hero {
     height: 100vh;
     background-image: url('img/principal.jpg');
@@ -443,25 +480,14 @@ body::after {
 
 /* Footer-specific spacing to avoid crowding (placed last to override generic rules) */
 @media (max-width: 900px) {
-    .footer.with-florals::before,
-    .footer.with-florals::after {
-        width: min(36vw, 300px);
-        height: min(36vw, 300px);
-        opacity: 0.10; /* subtler on tablet */
-    }
-    .footer.with-florals::before { top: 8%; left: 6%; }
-    .footer.with-florals::after  { bottom: 8%; right: 6%; }
+    /* Las reglas específicas ya están definidas arriba */
 }
 
 @media (max-width: 600px) {
-    /* Keep only one floral in the footer on phones for clarity */
-    .footer.with-florals::after { content: none !important; display: none !important; }
-    .footer.with-florals::before {
-    width: 36vw;
-    height: 36vw;
-    top: 10%;
-    left: 8%;
-    opacity: 0.10; /* lighter on phones */
+    /* Mantener ambas flores en móviles para mayor efecto visual */
+    .footer.with-florals::before,
+    .footer.with-florals::after {
+        display: block !important; /* Asegurar que ambas flores se muestren */
     }
 }
 
@@ -1676,9 +1702,6 @@ body::after {
 
 @media (max-width: 520px) {
     .footer { padding-top: 56px; }
-    /* On phones keep only one floral but make it a bit stronger */
-    .footer.with-florals::after { content: none !important; display: none !important; }
-    .footer.with-florals::before { opacity: 0.16; width: 64vw; height: 64vw; top: 10%; left: 8%; }
 }
 
 .footer-content {
