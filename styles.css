@@ -205,8 +205,8 @@ body::after {
 /* Countdown: floral4 + floral6 - extender para conectar con Timeline */
 .countdown-section.with-florals::before { 
     background-image: var(--floral-4); 
-    opacity: 0.14; 
-    top: -22%; 
+    opacity: 0.08; /* Reducir opacidad de flor izquierda para equilibrar */
+    top: 15%; /* Mover más abajo para alinearse con la zona del reloj */
     left: -16%; 
     width: min(56vw, 720px);
     height: min(56vw, 720px);
@@ -224,7 +224,7 @@ body::after {
 .timeline-section.with-florals::before { 
     background-image: var(--floral-6); 
     opacity: 0.22; 
-    top: -18%; 
+    top: 10%; /* Ajustar para que esté en la zona del título "Minuto a minuto" */
     left: -12%; 
     width: min(58vw, 760px); 
     height: min(58vw, 760px); 
@@ -255,48 +255,59 @@ body::after {
     height: min(60vw, 780px);
 }
 
-/* Footer: sin floral5; usar 3/4/6 y evitar bloques blancos */
-.footer.with-florals::before { background-image: var(--floral-4); opacity: 0.14; top: -10%; left: -10%; }
-.footer.with-florals::after  { background-image: var(--floral-6); opacity: 0.14; bottom: -12%; right: -12%; transform: scaleX(-1) rotate(6deg); }
+/* Footer: hacer que las flores salgan de las orillas */
+.footer.with-florals::before { 
+    background-image: var(--floral-4); 
+    opacity: 0.14; 
+    top: -20%; /* Extender hacia arriba */
+    left: -25%; /* Extender hacia la izquierda para que salga de la orilla */
+}
+.footer.with-florals::after  { 
+    background-image: var(--floral-6); 
+    opacity: 0.14; 
+    bottom: -25%; /* Extender hacia abajo */
+    right: -25%; /* Extender hacia la derecha para que salga de la orilla */
+    transform: scaleX(-1) rotate(6deg); 
+}
 
 /* Footer: completely separate and adjustable florals */
 .footer.with-florals::before,
 .footer.with-florals::after {
-    width: min(26vw, 280px);
-    height: min(26vw, 280px);
+    width: min(45vw, 500px); /* Aumentar tamaño para que se vean al salir de las orillas */
+    height: min(45vw, 500px);
     mix-blend-mode: multiply;
 }
 .footer.with-florals::before {
-    top: 14%;
-    left: 10%;
+    top: -20%;
+    left: -25%;
     opacity: 0.12;
     transform: rotate(4deg);
 }
 .footer.with-florals::after {
-    bottom: 14%;
-    right: 10%;
+    bottom: -25%;
+    right: -25%;
     opacity: 0.12;
 }
 
 @media (max-width: 900px) {
     .footer.with-florals::before,
     .footer.with-florals::after {
-        width: min(54vw, 420px);
-        height: min(54vw, 420px);
+        width: min(60vw, 480px); /* Aumentar tamaño para mantener efecto */
+        height: min(60vw, 480px);
     }
-    .footer.with-florals::before { top: 6%; left: 4%; }
-    .footer.with-florals::after { bottom: 4%; right: 4%; }
+    .footer.with-florals::before { top: -18%; left: -22%; } /* Mantener fuera de orillas */
+    .footer.with-florals::after { bottom: -20%; right: -22%; }
 }
 
 @media (max-width: 520px) {
     .footer.with-florals::before,
     .footer.with-florals::after {
-        width: 72vw;
-        height: 72vw;
+        width: 80vw; /* Aumentar tamaño */
+        height: 80vw;
         opacity: 0.16; /* compensate for smaller size */
     }
-    .footer.with-florals::before { top: 8%; left: 6%; }
-    .footer.with-florals::after { bottom: 6%; right: 6%; }
+    .footer.with-florals::before { top: -15%; left: -20%; } /* Mantener saliendo de orillas */
+    .footer.with-florals::after { bottom: -18%; right: -20%; }
 }
 
 /* Ultra-small devices: remove footer florals entirely to avoid crowding */
@@ -707,7 +718,7 @@ body::after {
 /* Medium screens: soften florals to avoid stacking while maintaining continuity */
 @media (max-width: 820px) and (min-width: 521px) {
     .wedding-details.with-florals::after { opacity: 0.12; }
-    .countdown-section.with-florals::before { opacity: 0.12; }
+    .countdown-section.with-florals::before { opacity: 0.06; } /* Mantener proporción reducida */
     .timeline-section.with-florals::after { opacity: 0.12; }
 }
 
