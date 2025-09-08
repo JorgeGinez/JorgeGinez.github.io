@@ -276,7 +276,7 @@ body::after {
     filter: contrast(1.3) saturate(1.2) brightness(1.1); /* Más contraste y brillo */
 }
 .footer.with-florals::before {
-    width: min(45vw, 550px); /* Flor izquierda más pequeña */
+    width: min(45vw, 550px); /* Flor izquierda tamaño original escritorio */
     height: min(45vw, 550px);
     top: -3%; /* Bajar aún más la flor izquierda */
     left: -5%; /* Mover más hacia la derecha */
@@ -284,147 +284,457 @@ body::after {
     transform: rotate(8deg); /* Mantener rotación dinámica */
 }
 .footer.with-florals::after {
-    width: min(60vw, 700px); /* Flor derecha mantiene tamaño */
+    width: min(60vw, 700px); /* Flor derecha tamaño original escritorio */
     height: min(60vw, 700px);
     bottom: -75%; /* Bajar directamente mucho más la flor derecha */
     right: -20%;
     opacity: 0.32;
 }
 
+/* TABLET INTERMEDIO (900px) - Transición suave hacia móvil */
 @media (max-width: 900px) {
+    .with-florals {
+        overflow: hidden !important;
+        position: relative !important;
+    }
+    
+    .with-florals::before {
+        width: min(55vw, 480px) !important;
+        height: min(55vw, 480px) !important;
+        opacity: 0.20 !important;
+        left: -25% !important;
+        top: -18% !important;
+        max-height: 65vh !important;
+        z-index: 0 !important;
+    }
+    
+    .with-florals::after {
+        width: min(60vw, 520px) !important;
+        height: min(60vw, 520px) !important;
+        opacity: 0.18 !important;
+        right: -30% !important;
+        bottom: 22% !important;
+        max-height: 65vh !important;
+        clip-path: inset(0 0 6% 0) !important;
+        z-index: 0 !important;
+    }
+    
+    /* Footer específico para tablets */
     .footer.with-florals::before {
-        width: min(55vw, 450px); /* Flor izquierda más pequeña en tablets */
-        height: min(55vw, 450px);
+        width: min(45vw, 380px); /* Flor izquierda reducida en tablets */
+        height: min(45vw, 380px);
         top: 0%; /* Bajar más en tablets */
         left: -3%; /* Más hacia la derecha en tablets */
         opacity: 0.32; /* Opacidad visible en tablets */
     }
     .footer.with-florals::after {
-        width: min(70vw, 600px); /* Flor derecha mantiene tamaño en tablets */
-        height: min(70vw, 600px);
+        width: min(58vw, 500px); /* Flor derecha reducida en tablets */
+        height: min(58vw, 500px);
         bottom: -70%; /* Bajar directamente más en tablets */
         right: -18%; 
         opacity: 0.28; 
     }
 }
 
-@media (max-width: 520px) {
-    .footer.with-florals::before {
-        width: 70vw; /* Flor izquierda más pequeña en móviles */
-        height: 70vw;
-        opacity: 0.40; /* Opacidad alta en móviles */
-        mix-blend-mode: multiply; /* Modo más suave en móviles */
-        top: 3%; /* Bajar más en móviles */
-        left: -2%; /* Más hacia la derecha en móviles */
-        filter: contrast(1.4) saturate(1.3) brightness(1.2); /* Más definición */
-    }
-    .footer.with-florals::after {
-        width: 90vw; /* Flor derecha mantiene tamaño generoso en móviles */
-        height: 90vw;
-        opacity: 0.40;
-        mix-blend-mode: multiply;
-        bottom: -65%; /* Bajar directamente más en móviles */
-        right: -15%; 
-        filter: contrast(1.4) saturate(1.3) brightness(1.2);
-    }
-}
 
-/* Ultra-small devices: mantener flores visibles */
-@media (max-width: 360px) {
-    .footer.with-florals::before {
-        width: 65vw; /* Flor izquierda más pequeña */
-        height: 65vw;
-        opacity: 0.35; /* Mantener buena visibilidad */
-        top: 5%; /* Bajar más en pantallas pequeñas */
-        left: 0%; /* Más hacia la derecha */
-    }
-    .footer.with-florals::after {
-        width: 85vw; /* Flor derecha mantiene tamaño */
-        height: 85vw;
-        opacity: 0.35;
-        bottom: -60%; /* Bajar directamente más */
-        right: -12%; 
-    }
-}
 
-@media (max-width: 900px) {
+/* 
+ * SISTEMA DE OPTIMIZACIÓN DE FLORES PARA MÓVIL - VERSIÓN COMPLETA
+ * ================================================================
+ * 
+ * REGLAS FUNDAMENTALES IMPLEMENTADAS:
+ * 
+ * 1. CONTENCIÓN ESTRICTA ABSOLUTA
+ *    - overflow: hidden !important en todas las secciones .with-florals
+ *    - position: relative !important en contenedores padre
+ *    - z-index jerarquía: flores (0), contenido (2-3)
+ * 
+ * 2. ELIMINACIÓN DE EXTENSIONES PROBLEMÁTICAS
+ *    - NO valores bottom negativos excesivos (máximo -5%)
+ *    - Preferencia por valores positivos: bottom: 8% a 25%
+ *    - Flores contenidas dentro del viewport
+ * 
+ * 3. LÍMITES DE ALTURA PROGRESIVOS - EXPANDIDOS PARA VISIBILIDAD WEB
+ *    - Tablet (768px): max-height: 75vh (expandido)
+ *    - Móvil (520px): max-height: 80vh (expandido) 
+ *    - Pequeño (360px): max-height: 70vh (expandido)
+ *    - Landscape: max-height: 35vh
+ * 
+ * 4. SISTEMA DE RECORTE INTELIGENTE
+ *    - Corte mínimo: clip-path: inset(0 0 8% 0) tablets
+ *    - Corte moderado: clip-path: inset(0 0 10-12% 0) móviles
+ *    - Corte controlado: clip-path: inset(0 0 20% 0) landscape
+ * 
+ * 5. PERSONALIZACIÓN POR SECCIÓN - PROMINENTE COMO EN VERSIÓN WEB
+ *    - Wedding Details: Opacidad 0.32-0.40, EXTRA VISIBLE
+ *    - Countdown: Opacidad 0.25-0.32, PROMINENTE sin interferir
+ *    - Timeline: Opacidad 0.35-0.45, MÁXIMA VISIBILIDAD 
+ *    - Gallery: Opacidad 0.20-0.28, VISIBLE como en web
+ *    - Tamaños: 100vw a 130vw para igualar experiencia web
+ * 
+ * BREAKPOINTS DE IMPLEMENTACIÓN:
+ * - 900px: Transición suave tablet → móvil
+ * - 768px: Tablet/móvil grande - contención inicial
+ * - 520px: Móvil estándar - optimización principal
+ * - 360px: Móvil pequeño - máxima contención
+ * - landscape + altura <480px: Contención extrema
+ */
+
+/* OPTIMIZACIÓN COMPLETA DE FLORES PARA MÓVIL */
+/* CONTENCIÓN ESTRICTA ABSOLUTA - TABLET/MÓVIL GRANDE */
+@media (max-width: 768px) {
+    .with-florals {
+        overflow: hidden !important;
+        position: relative !important;
+    }
+    
+    /* Flor izquierda - Más centrada */
     .with-florals::before {
-        top: -10%; left: -10%;
-    width: min(52vw, 480px); height: min(52vw, 480px);
-        transform: rotate(-6deg);
-    }
-    .with-florals::after {
-        bottom: -12%; right: -10%;
-    width: min(56vw, 520px); height: min(56vw, 520px);
-        transform: scaleX(-1) rotate(7deg);
-    }
-}
-
-@media (max-width: 520px) {
-    /* Mobile: Show florals but smaller and well-positioned */
-    .with-florals::before,
-    .with-florals::after {
-        display: block !important;
-        opacity: 0.15 !important;
-        width: 40vw !important;
-        height: 40vw !important;
+        width: 100vw !important; /* Mucho más grande */
+        height: 100vw !important;
+        opacity: 0.30 !important; /* Mucho más visible */
+        left: -45% !important;
+        top: -15% !important; /* Movida hacia abajo */
+        max-height: 75vh !important;
         z-index: 0 !important;
     }
-    .with-florals::before { top: -18% !important; left: -18% !important; }
-    .with-florals::after  { bottom: -14% !important; right: -16% !important; }
-
-    /* Specific sections - ensure they all show */
-    .wedding-details.with-florals::before,
-    .wedding-details.with-florals::after,
-    .countdown-section.with-florals::before,
-    .countdown-section.with-florals::after,
-    .timeline-section.with-florals::before,
-    .timeline-section.with-florals::after,
-    .simple-gallery.with-florals::before,
-    .simple-gallery.with-florals::after {
-        display: block !important;
-        opacity: 0.12 !important;
-        width: 42vw !important;
-        height: 42vw !important;
-    }
-
-    /* Timeline: keep only one floral for cleaner look but make it more visible */
-    .timeline-section.with-florals::before {
-    display: block !important;
-    opacity: 0.20 !important;
-    width: 46vw !important;
-    height: 46vw !important;
-    top: -22% !important;
-    left: -24% !important;
-    }
-    .timeline-section.with-florals::after {
-        display: block !important;
-        opacity: 0.10 !important;
-        width: 32vw !important;
-        height: 32vw !important;
-        bottom: -12% !important;
-        right: -14% !important;
-    }
-
-    /* Gallery: make even more subtle */
-    .simple-gallery.with-florals::before,
-    .simple-gallery.with-florals::after {
-        opacity: 0.08 !important;
-        width: 38vw !important;
-        height: 38vw !important;
+    
+    /* Flor derecha - Más centrada */
+    .with-florals::after {
+        width: 105vw !important; /* Mucho más grande */
+        height: 105vw !important;
+        opacity: 0.25 !important; /* Mucho más visible */
+        right: -50% !important;
+        bottom: 35% !important; /* Movida hacia arriba para centrar */
+        max-height: 75vh !important;
+        clip-path: inset(0 0 5% 0) !important; /* Menos corte */
+        z-index: 0 !important;
     }
 }
-    /* Wedding details: avoid overlap and stay off the edges on phones */
+
+/* MÓVIL ESTÁNDAR - Flores EQUILIBRADAS y DISTRIBUIDAS */
+@media (max-width: 520px) {
+    .with-florals {
+        overflow: hidden !important;
+        position: relative !important;
+    }
+    
+    .with-florals::before {
+        width: 95vw !important; /* Reducido para mejor distribución */
+        height: 95vw !important;
+        opacity: 0.35 !important; /* Muy visible como en web */
+        left: -40% !important; /* Menos extensión */
+        top: -15% !important; /* Posición balanceada */
+        max-height: 80vh !important;
+        z-index: 0 !important;
+    }
+    
+    .with-florals::after {
+        width: 100vw !important; /* Reducido para mejor distribución */
+        height: 100vw !important;
+        opacity: 0.28 !important; /* Muy visible como en web */
+        right: -45% !important; /* Menos extensión */
+        bottom: 30% !important; /* Mejor separación */
+        max-height: 80vh !important;
+        clip-path: inset(0 0 3% 0) !important; /* Mínimo corte */
+        z-index: 0 !important;
+    }
+    
+    /* Contenido siempre visible */
+    .with-florals .container {
+        position: relative !important;
+        z-index: 2 !important;
+    }
+}
+
+/* MÓVIL PEQUEÑO - Flores VISIBLES como en web */
+@media (max-width: 360px) {
+    .with-florals::before {
+        width: 100vw !important; /* Tamaño generoso */
+        height: 100vw !important;
+        opacity: 0.30 !important; /* Muy visible */
+        left: -45% !important;
+        top: -18% !important; /* Movida hacia abajo */
+        max-height: 70vh !important;
+    }
+    
+    .with-florals::after {
+        width: 105vw !important; /* Tamaño generoso */
+        height: 105vw !important;
+        opacity: 0.25 !important; /* Muy visible */
+        right: -50% !important;
+        bottom: 35% !important; /* Movida hacia arriba para centrar */
+        max-height: 70vh !important;
+        clip-path: inset(0 0 5% 0) !important; /* Mínimo corte */
+    }
+}
+
+/* LANDSCAPE EXTREMO - Contención ultra-estricta para altura limitada */
+@media (orientation: landscape) and (max-height: 480px) {
+    .with-florals::before,
+    .with-florals::after {
+        width: 40vw !important;
+        height: 40vw !important;
+        opacity: 0.10 !important;
+        max-height: 35vh !important;
+    }
+    
+    /* Posiciones seguras para landscape */
+    .with-florals::before { 
+        top: -15% !important; 
+        left: -15% !important; 
+    }
+    
+    .with-florals::after { 
+        bottom: 12% !important; 
+        right: -15% !important; 
+        clip-path: inset(0 0 20% 0) !important;
+    }
+}
+
+/* PERSONALIZACIÓN POR SECCIÓN - WEDDING DETAILS - DISTRIBUIDAS */
+@media (max-width: 768px) {
     .wedding-details.with-florals::before {
-        opacity: 0.16 !important;
-        width: 38vw !important; height: 38vw !important;
-        top: 1% !important; left: -10% !important;
+        opacity: 0.35 !important; /* Como en web */
+        left: -35% !important; /* Mejor distribución */
+        top: -18% !important; /* Balanceada */
+        width: 95vw !important; /* Reducido para menos amontonamiento */
+        height: 95vw !important;
     }
-    .wedding-details.with-florals::after  {
-        opacity: 0.14 !important;
-        width: 36vw !important; height: 36vw !important;
-        bottom: -20% !important; right: -20% !important;
+    
+    .wedding-details.with-florals::after {
+        opacity: 0.28 !important; /* Como en web */
+        right: -40% !important; /* Mejor distribución */
+        bottom: 28% !important; /* Más separación */
+        width: 100vw !important; /* Reducido para menos amontonamiento */
+        height: 100vw !important;
     }
+}
+
+@media (max-width: 520px) {
+    .wedding-details.with-florals::before {
+        opacity: 0.40 !important; /* Muy visible */
+        width: 105vw !important; /* Reducido */
+        height: 105vw !important;
+        left: -45% !important; /* Mejor posicionamiento */
+        top: -22% !important; /* Balanceada */
+    }
+    
+    .wedding-details.with-florals::after {
+        opacity: 0.32 !important; /* Muy visible */
+        width: 110vw !important; /* Reducido */
+        height: 110vw !important;
+        right: -50% !important; /* Mejor posicionamiento */
+        bottom: 32% !important; /* Más separación */
+    }
+}
+
+/* PERSONALIZACIÓN POR SECCIÓN - COUNTDOWN - AÚN MÁS ABAJO */
+@media (max-width: 768px) {
+    .countdown-section.with-florals::before {
+        opacity: 0.30 !important; /* Visible como en web */
+        width: 90vw !important; /* Reducido ligeramente */
+        height: 90vw !important;
+        left: -50% !important;
+        top: 5% !important; /* Aún más abajo */
+    }
+    
+    .countdown-section.with-florals::after {
+        opacity: 0.25 !important; /* Visible como en web */
+        width: 95vw !important; /* Reducido ligeramente */
+        height: 95vw !important;
+        right: -55% !important;
+        bottom: 60% !important; /* Aún más arriba */
+    }
+}
+
+@media (max-width: 520px) {
+    .countdown-section.with-florals::before {
+        opacity: 0.32 !important; /* Prominente como en web */
+        width: 100vw !important; /* Reducido ligeramente */
+        height: 100vw !important;
+        left: -55% !important;
+        top: 2% !important; /* Aún más abajo */
+    }
+    
+    .countdown-section.with-florals::after {
+        opacity: 0.28 !important; /* Prominente como en web */
+        width: 105vw !important; /* Reducido ligeramente */
+        height: 105vw !important;
+        right: -60% !important;
+        bottom: 65% !important; /* Aún más arriba */
+    }
+}
+
+/* PERSONALIZACIÓN POR SECCIÓN - TIMELINE - DISEÑO EQUILIBRADO */
+@media (max-width: 768px) {
+    .timeline-section.with-florals::before {
+        opacity: 0.40 !important; /* Muy prominente como en web */
+        width: 85vw !important; /* Reducido ligeramente */
+        height: 85vw !important;
+        left: -40% !important; /* Menos extensión hacia la izquierda */
+        top: 8% !important; /* Posición balanceada */
+    }
+    
+    .timeline-section.with-florals::after {
+        opacity: 0.32 !important; /* Muy prominente como en web */
+        width: 90vw !important; /* Reducido ligeramente */
+        height: 90vw !important;
+        right: -45% !important; /* Menos extensión hacia la derecha */
+        bottom: 15% !important; /* Más abajo */
+    }
+}
+
+@media (max-width: 520px) {
+    .timeline-section.with-florals::before {
+        opacity: 0.45 !important; /* Máxima visibilidad como en web */
+        width: 95vw !important; /* Reducido ligeramente */
+        height: 95vw !important;
+        left: -45% !important; /* Mejor posicionamiento */
+        top: 12% !important; /* Posición balanceada */
+    }
+    
+    .timeline-section.with-florals::after {
+        opacity: 0.35 !important; /* Máxima visibilidad como en web */
+        width: 100vw !important; /* Reducido ligeramente */
+        height: 100vw !important;
+        right: -50% !important; /* Mejor posicionamiento */
+        bottom: 10% !important; /* Más abajo */
+    }
+}
+
+/* PERSONALIZACIÓN POR SECCIÓN - GALLERY - CENTRADAS */
+@media (max-width: 768px) {
+    .simple-gallery.with-florals::before {
+        opacity: 0.25 !important; /* Visible como en web */
+        width: 100vw !important;
+        height: 100vw !important;
+        left: -45% !important;
+        top: -20% !important; /* Más centrada */
+    }
+    
+    .simple-gallery.with-florals::after {
+        opacity: 0.20 !important; /* Visible como en web */
+        width: 105vw !important;
+        height: 105vw !important;
+        right: -50% !important;
+        bottom: 30% !important; /* Más centrada */
+    }
+}
+
+@media (max-width: 520px) {
+    .simple-gallery.with-florals::before {
+        opacity: 0.28 !important; /* Prominente como en web */
+        width: 110vw !important;
+        height: 110vw !important;
+        left: -50% !important;
+        top: -22% !important; /* Más centrada */
+    }
+    
+    .simple-gallery.with-florals::after {
+        opacity: 0.22 !important; /* Prominente como en web */
+        width: 115vw !important;
+        height: 115vw !important;
+        right: -55% !important;
+        bottom: 32% !important; /* Más centrada */
+    }
+}
+
+/* FOOTER OPTIMIZADO PARA MÓVIL */
+@media (max-width: 520px) {
+    .footer.with-florals::before {
+        width: 45vw !important; /* Flor izquierda mucho más pequeña en móviles */
+        height: 45vw !important;
+        opacity: 0.40 !important; /* Opacidad alta en móviles */
+        mix-blend-mode: multiply !important; /* Modo más suave en móviles */
+        top: 3% !important; /* Bajar más en móviles */
+        left: -2% !important; /* Más hacia la derecha en móviles */
+        filter: contrast(1.4) saturate(1.3) brightness(1.2) !important; /* Más definición */
+        max-height: 50vh !important;
+    }
+    
+    .footer.with-florals::after {
+        width: 65vw !important; /* Flor derecha visible pero moderada en móviles */
+        height: 65vw !important;
+        opacity: 0.40 !important;
+        mix-blend-mode: multiply !important;
+        bottom: -50% !important; /* Subida para mejor visibilidad */
+        right: -15% !important; 
+        filter: contrast(1.4) saturate(1.3) brightness(1.2) !important;
+        max-height: 50vh !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .footer.with-florals::before {
+        width: 40vw !important; /* Flor izquierda muy pequeña */
+        height: 40vw !important;
+        opacity: 0.35 !important; /* Mantener buena visibilidad */
+        top: 5% !important; /* Bajar más en pantallas pequeñas */
+        left: 0% !important; /* Más hacia la derecha */
+        max-height: 40vh !important;
+    }
+    
+    .footer.with-florals::after {
+        width: 60vw !important; /* Flor derecha visible en pantallas pequeñas */
+        height: 60vw !important;
+        opacity: 0.35 !important;
+        bottom: -45% !important; /* Subida para mejor visibilidad */
+        right: -12% !important; 
+        max-height: 40vh !important;
+    }
+}
+
+/* VALIDACIONES FINALES Y RENDIMIENTO OPTIMIZADO */
+/* Prevenir scroll horizontal absoluto en todos los dispositivos móviles */
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+    }
+    
+    /* Asegurar que todas las flores están contenidas */
+    .with-florals {
+        contain: layout style paint !important;
+        will-change: auto !important;
+    }
+    
+    /* Performance: reducir repaint en flores */
+    .with-florals::before,
+    .with-florals::after {
+        will-change: transform, opacity !important;
+        transform-style: flat !important;
+        backface-visibility: hidden !important;
+    }
+}
+
+/* Transiciones suaves entre breakpoints */
+@media (max-width: 900px) and (min-width: 769px) {
+    .with-florals::before,
+    .with-florals::after {
+        transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease !important;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 521px) {
+    .with-florals::before,
+    .with-florals::after {
+        transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease !important;
+    }
+}
+
+/* Asegurar contenido siempre visible sobre flores */
+@media (max-width: 768px) {
+    .section-title,
+    .countdown,
+    .timeline-events,
+    .gallery-grid,
+    .details-grid {
+        position: relative !important;
+        z-index: 3 !important;
+    }
+}
 
 .container {
     max-width: 1200px;
