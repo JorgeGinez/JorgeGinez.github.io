@@ -1,14 +1,13 @@
 // Wedding Invitation JavaScript
+(function() {
+    'use strict';
 
 // Set the wedding date (start of ceremony)
 // Aligns with the invitation: Dec 20, 2025 at 2:00 PM (local time)
 const weddingDate = new Date('2025-12-20T14:00:00').getTime();
 
 // Cache countdown elements and guard missing nodes (e.g., no seconds in markup)
-const daysEl = document.getElementById('days');
-const hoursEl = document.getElementById('hours');
-const minutesEl = document.getElementById('minutes');
-const secondsEl = document.getElementById('seconds');
+let daysEl, hoursEl, minutesEl, secondsEl;
 
 // Countdown Timer
 function updateCountdown() {
@@ -28,22 +27,38 @@ function updateCountdown() {
     secondsEl && (secondsEl.textContent = seconds.toString().padStart(2, '0'));
     } else {
         // Wedding day has arrived!
-    document.getElementById('countdown').innerHTML = '<h2 style="color: white; font-family: \'Amsterdam Four\', \'Alegreya\', serif; font-size: 3rem;">¡Es nuestro día especial!</h2>';
+    const countdownEl = document.getElementById('countdown');
+    if (countdownEl) {
+        countdownEl.innerHTML = '<h2 style="color: white; font-family: \'Amsterdam Four\', \'Alegreya\', serif; font-size: 3rem;">¡Es nuestro día especial!</h2>';
+    }
     }
 }
 
-// Update countdown every second
-setInterval(updateCountdown, 1000);
+// Initialize countdown elements and start timer
+function initCountdown() {
+    daysEl = document.getElementById('days');
+    hoursEl = document.getElementById('hours');
+    minutesEl = document.getElementById('minutes');
+    secondsEl = document.getElementById('seconds');
+    
+    updateCountdown();
+    // Update countdown every second
+    setInterval(updateCountdown, 1000);
+}
 
-// Initialize countdown on page load
-updateCountdown();
-
-// Smooth scrolling for scroll indicator
-document.querySelector('.scroll-indicator').addEventListener('click', function() {
-    document.querySelector('.wedding-details').scrollIntoView({
-        behavior: 'smooth'
-    });
-});
+// Initialize scroll indicator
+function initScrolling() {
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    const weddingDetails = document.querySelector('.wedding-details');
+    
+    if (scrollIndicator && weddingDetails) {
+        scrollIndicator.addEventListener('click', function() {
+            weddingDetails.scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    }
+}
 
 // Photo Carousel Functionality
 let currentSlide = 0;
@@ -503,4 +518,18 @@ window.addEventListener('load', function() {
     }, 2000);
 });
 
-console.log('¡Invitación de boda cargada exitosamente! 💕 - Rosa & Honorato');
+// Initialize when DOM is ready
+function init() {
+    initCountdown();
+    initScrolling();
+    console.log('¡Invitación de boda cargada exitosamente! 💕 - Rosa & Honorato');
+}
+
+// Run initialization
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
+
+})(); // Close IIFE

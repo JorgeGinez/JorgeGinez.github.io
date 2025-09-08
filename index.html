@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invitación de Boda - Honorato & Rosa</title>
+    <meta name="description" content="Te invitamos a celebrar la boda de Honorato y Rosa el 20 de diciembre de 2025 en Yahualutzingo, Vicente Guerrero, Puebla">
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="img/logo.png">
     <link rel="icon" type="image/png" sizes="16x16" href="img/logo.png">
@@ -15,7 +16,9 @@
     <link rel="preload" href="fonts/Alegreya-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="fonts/Karla-Bold.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="fonts/Caslon 540 Regular.otf" as="font" type="font/otf" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Load Font Awesome asynchronously to avoid render blocking -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
 </head>
 <body>
     
@@ -44,7 +47,7 @@
                 <!-- Ceremony -->
                 <div class="detail-card ceremony">
                     <div class="card-icon">
-                        <img src="img/iglesia-edit.png" alt="Iglesia" loading="lazy" decoding="async" />
+                        <img src="img/iglesia-edit.png" alt="Iglesia" width="64" height="64" loading="lazy" decoding="async" />
                     </div>
                     <h3>Ceremonia</h3>
                     <p class="time">2:00 PM</p>
@@ -58,7 +61,7 @@
                 <!-- Reception -->
                 <div class="detail-card reception">
                     <div class="card-icon">
-                        <img src="img/casa-edit.png" alt="Casa para recepción" loading="lazy" decoding="async" />
+                        <img src="img/casa-edit.png" alt="Casa para recepción" width="64" height="64" loading="lazy" decoding="async" />
                     </div>
                     <h3>Recepción</h3>
                     <p class="time">4:00 PM</p>
@@ -195,10 +198,10 @@
             </div>
 
             <div class="gallery-grid structured">
-                <div class="gallery-item left"><img loading="lazy" decoding="async" src="img/IMG_20190430_191318994.jpg"></div>
-                <div class="gallery-item top"><img loading="lazy" decoding="async" src="img/PXL_20250426_222936809.MP.jpg"></div>
-                <div class="gallery-item right"><img loading="lazy" decoding="async" src="img/PXL_20250426_223036710.jpg"></div>
-                <div class="gallery-item bottom"><img loading="lazy" decoding="async" src="img/PXL_20250426_223609238.MP.jpg"></div>
+                <div class="gallery-item left"><img loading="lazy" decoding="async" src="img/IMG_20190430_191318994.jpg" alt="Foto de Rosa y Honorato 1" width="300" height="400"></div>
+                <div class="gallery-item top"><img loading="lazy" decoding="async" src="img/PXL_20250426_222936809.MP.jpg" alt="Foto de Rosa y Honorato 2" width="300" height="400"></div>
+                <div class="gallery-item right"><img loading="lazy" decoding="async" src="img/PXL_20250426_223036710.jpg" alt="Foto de Rosa y Honorato 3" width="300" height="400"></div>
+                <div class="gallery-item bottom"><img loading="lazy" decoding="async" src="img/PXL_20250426_223609238.MP.jpg" alt="Foto de Rosa y Honorato 4" width="300" height="400"></div>
             </div>
         </div>
     </section>
@@ -240,6 +243,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=2025-08-28-6"></script>
+    <script src="script.js?v=2025-09-07-optimized" defer></script>
 </body>
 </html>
