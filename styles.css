@@ -11,6 +11,26 @@ html {
     width: 100%; 
 }
 
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+    * {
+        /* Optimize scroll performance on mobile */
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        /* Reduce backface visibility issues */
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    
+    /* Optimize animations for mobile performance */
+    *,
+    *::before,
+    *::after {
+        /* Use GPU acceleration for better performance */
+        will-change: auto;
+    }
+}
+
 /* Media elements scale with layout width */
 img, svg, video, canvas { max-width: 100%; height: auto; }
 
@@ -1724,6 +1744,20 @@ body::after {
     filter: none; /* color original */
 }
 
+/* Disable heavy animations on mobile for better performance */
+@media (max-width: 768px) {
+    .gallery-item img {
+        transition: filter 0.2s ease; /* Faster, lighter transition */
+        /* Remove transform transition to prevent performance issues */
+    }
+    
+    .gallery-item.in-view img,
+    .gallery-item:hover img {
+        transform: none; /* Disable scale on mobile */
+        filter: none; /* Keep simple filter change */
+    }
+}
+
 @media (max-width: 900px) {
     .gallery-grid { grid-template-columns: repeat(4, 1fr); }
     .gallery-item.small { grid-column: span 2; }
@@ -1733,11 +1767,34 @@ body::after {
 }
 
 @media (max-width: 600px) {
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 8px; /* Smaller gap for mobile */
+    }
     .gallery-item.small,
     .gallery-item.wide,
     .gallery-item.tall,
-    .gallery-item.hero { grid-column: span 2; aspect-ratio: 4 / 3; }
+    .gallery-item.hero { 
+        grid-column: span 2; 
+        aspect-ratio: 4 / 3; 
+    }
+    
+    /* Reduce visual complexity on mobile for better performance */
+    .gallery-item {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06); /* Lighter shadow */
+        border-radius: 8px; /* Smaller radius */
+    }
+    
+    /* Disable heavy filters on mobile */
+    .gallery-item img {
+        filter: none; /* Remove heavy filters */
+    }
+    
+    .gallery-item.in-view img,
+    .gallery-item:hover img {
+        filter: brightness(1.05); /* Simple brightness change only */
+    }
+    
     /* Tighten space before footer on phones */
     .simple-gallery { padding-bottom: 12px; }
 }
