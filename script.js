@@ -158,11 +158,10 @@ function openMap(location) {
     window.open(url, '_blank');
 }
 
-// Intersection Observer for animations (optimized for mobile performance)
-const isMobileDevice = window.innerWidth <= 768;
+// Intersection Observer for animations
 const observerOptions = {
-    threshold: isMobileDevice ? 0.2 : 0.1, // Higher threshold on mobile
-    rootMargin: isMobileDevice ? '0px 0px -20px 0px' : '0px 0px -50px 0px' // Smaller margin on mobile
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
 };
 
 const observer = new IntersectionObserver(function(entries) {
@@ -170,8 +169,6 @@ const observer = new IntersectionObserver(function(entries) {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
-            // Stop observing once animated to improve performance
-            observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
@@ -295,16 +292,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
                     } else {
-                        // On mobile, keep the in-view class to avoid constant toggling
-                        if (!isMobileDevice) {
-                            entry.target.classList.remove('in-view');
-                        }
+                        entry.target.classList.remove('in-view');
                     }
                 });
             }, {
-                // More conservative thresholds for mobile
-                threshold: isMobileDevice ? 0.3 : 0.2,
-                rootMargin: isMobileDevice ? '0px 0px -10% 0px' : '0px 0px -15% 0px'
+                // Trigger a bit earlier while scrolling on mobile
+                threshold: 0.2,
+                rootMargin: '0px 0px -15% 0px'
             });
 
             galleryItems.forEach((item) => highlightObserver.observe(item));
@@ -328,12 +322,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Add floating hearts animation (optimized for mobile)
+// Add floating hearts animation
 function createFloatingHeart() {
-    // Reduce frequency on mobile devices for better performance
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile && Math.random() > 0.3) return; // 70% chance to skip on mobile
-    
     const heart = document.createElement('div');
     heart.innerHTML = '♥';
     heart.style.position = 'fixed';
@@ -345,13 +335,15 @@ function createFloatingHeart() {
     heart.style.pointerEvents = 'none';
     heart.style.zIndex = '1000';
     heart.style.animation = 'floatUp 4s linear infinite';
-
+    
     document.body.appendChild(heart);
-
+    
     setTimeout(() => {
         heart.remove();
     }, 4000);
-}// Add CSS for floating hearts animation
+}
+
+// Add CSS for floating hearts animation
 const style = document.createElement('style');
 style.textContent = `
     @keyframes floatUp {
@@ -376,9 +368,8 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Create floating hearts periodically (optimized for mobile performance)
-const heartInterval = window.innerWidth <= 768 ? 8000 : 3000; // Less frequent on mobile
-setInterval(createFloatingHeart, heartInterval);
+// Create floating hearts periodically
+setInterval(createFloatingHeart, 3000);
 
 // Remove parallax adjustments to avoid any cropping or layout gaps.
 // Keep hero positioning controlled purely by CSS.
@@ -531,24 +522,6 @@ window.addEventListener('load', function() {
 function init() {
     initCountdown();
     initScrolling();
-    
-    // Optimize scroll performance on mobile
-    if (isMobileDevice) {
-        // Throttle scroll events on mobile
-        let ticking = false;
-        const optimizeScroll = () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    // Minimal scroll optimizations
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-        
-        window.addEventListener('scroll', optimizeScroll, { passive: true });
-    }
-    
     console.log('¡Invitación de boda cargada exitosamente! 💕 - Rosa & Honorato');
 }
 
